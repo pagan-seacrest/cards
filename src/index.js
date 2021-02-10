@@ -80,18 +80,46 @@ const login = new Promise((resolve, reject) => {
     
 login.then (() => {
     const token = localStorage.getItem("token");
-        
-    document.getElementById("sign-in").addEventListener("click", (ev) => {
-    ev.preventDefault()
     
-    const req = fetch("https://ajax.test-danit.com/api/cards", {
-        method: "GET", headers: {
+    document.getElementById("sign-in").addEventListener("submit", (submit) => {
+        submit.preventDefault();
+        
+        const requset = fetch("https://ajax.test-danit.com/api/cards/login", {
+            method: "GET", headers: {
                 Authorization : `Bearer ${token}`
             }
-        }).then((res) => console.log(res))
+        });
+        requset.then((res) => console.log(res));
         document.getElementById("auth").remove();
     })
 });
 
 }
 
+// =============================================
+// const token = localStorage.getItem("token");
+
+const account = {"email": "velocity@fex.net", "password": "velocity"}
+
+// fetch("https://ajax.test-danit.com/api/cards/", {
+    // headers: { "Authorization": "Bearer 7b3ba7d7-4c45-4e6b-84d3-fef4f4fdc588" }
+// }).then((res) => console.log(res));
+
+// const ajax = fetch("https://ajax.test-danit.com/api/cards/login/",
+// { method: "POST", headers: {'Content-Type': 'application/json'},
+//         body: JSON.stringify(account)
+// })
+// ajax.then(res => console.log())
+
+async function ajax() {
+    const res = await fetch("https://ajax.test-danit.com/api/cards/login/", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(account)
+    })
+    let token = await res.text();
+    console.log(token);
+
+}
+
+ajax();
