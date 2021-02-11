@@ -1,6 +1,6 @@
-import Modal from "./modules/modal.js";
+import Modal from "./Modal.js";
 
-class Auth extends Modal {
+export default class Auth extends Modal {
     constructor ({position, type, formID, placeholder, required}) {
         super ({position: position, type: type, id: formID, placeHolder: placeholder, required: required});
         this.position = position;
@@ -57,6 +57,8 @@ class Auth extends Modal {
             return form;
         }
     }
-}
 
-export {Auth};
+    close () {
+        this.id.remove();
+    }
+}
