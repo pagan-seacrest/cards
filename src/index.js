@@ -28,7 +28,11 @@ class Client {
     }
 
     post () {
+<<<<<<< HEAD
         
+=======
+        // fetch()
+>>>>>>> 2824241... to old
     }
 }
 
