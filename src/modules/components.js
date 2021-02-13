@@ -45,6 +45,20 @@ class Input {
     }
 }
 
+class TextArea {
+    constructor ({id, placeHolder}) {
+        this.id = id;
+        this.placeHolder = placeHolder;
+    }
+
+    createArea () {
+        const area = document.createElement("textarea");
+        area.id = this.id;
+        area.placeholder = this.placeHolder;
+        return area;
+    } 
+}
+
 
 class Select {
     constructor ({position, id, name}) {
@@ -71,4 +85,4 @@ class Select {
     
 }
 
-export {Form, Input, Select};
+export {Form, Input, TextArea, Select};

@@ -8,7 +8,8 @@ const config = {
     token() { return localStorage.getItem("token") },
     loginToggle (value = undefined) {
         value === true ? this.content(loginOrCreate, "Створити візит") : this.content(loginOrCreate, "Вхід");
-    }
+    },
+    element (id) {return document.getElementById(id); },
 }
 
 
