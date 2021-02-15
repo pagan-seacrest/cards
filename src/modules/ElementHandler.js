@@ -42,7 +42,7 @@ export default class ElementHandler {
     }
     
     modify ({attribute, attributeValue}) {
-        attribute !== undefined && attributeValue !== undefined ? this.child.setAttribute(attributeValue) : false;
+        attribute !== undefined && attributeValue !== undefined ? this.child.setAttribute(attribute, attributeValue) : false;
         // return this.parent !== undefined ? this.parent.append(this.createElement()) : this.createElement();
     }
 

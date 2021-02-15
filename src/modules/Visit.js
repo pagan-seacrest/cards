@@ -4,7 +4,7 @@ import { Form, Input,TextArea, Select } from "./components.js";
 import Modal from "./Modal.js";
 import ElementHandler from "./ElementHandler.js";
 
-export default class Visit extends Modal {
+export default class Visit extends Modal{
     constructor ({
         position, id, type, name, placeHolder, required, 
 
@@ -40,73 +40,86 @@ export default class Visit extends Modal {
     selectVisit () {
         const form = this.form();
         const label = this.label();
-        label.id = "visit";
-        const select = new Select({position: label, name: this.id, id: "select-visit"});
-        this.position.append(form);
+        label.textContent = "Виберіть лікаря ";
+        let select = new ElementHandler([], {element: "select", id: "select-visit", parentElement: label});
+        select.addElement();
+        select.modify("name", "visit-form");
         config.element(this.id).append(label);
-        config.element("visit").append(select.createSelect());
-        config.content(config.element("visit"), "Вибір лікаря");
 
-        [new Select({position: config.element("select-visit")}).option("cardiologist", "Кардіолог"),
-         new Select({position: config.element("select-visit")}).option("dentist", "Стоматолог"),
-         new Select({position: config.element("select-visit")}).option("therapist", "Терапевт")
-        ].forEach(element => config.element("select-visit").append(element));
-    }
-
-    visitForm () {
-        if (this.visit === "Кардіолог") {
-            this.commonForm();
-            this.cardiologistForm();
-        } else if (this.visit === "Стоматолог") {
-            this.commonForm();
-            this.dentistForm();
-        } else if (this.visit === "Терапевт") {
-            this.commonForm();
-        }
-        const create = new ElementHandler([], {element: "button", id: "submit-visit" ,parentElement: config.element(this.id)});
-        create.addElement();
-        create.edit({element: create.child, content: "Створити візит"})
-        create.modify({attribute: "type", attributeValue: "submit"});
-
-        const cancel = new ElementHandler([], {element: "botton", id: "cancel-visit", parentElement: config.element(this.id)});
-        cancel.addElement();
-        cancel.edit({element: cancel.child, content: "Закрити"});
+        const option1 = new ElementHandler([], {element: "option", id: "visit-option-cardiologist", parentElement: config.element("select-visit")})
+        option1.addElement();
+        const eltOption1 = config.element("visit-option-cardiologist");
+        eltOption1.textContent = "Кардіолог";
+        eltOption1.nodeValue = "cardio";
         
+        const option2 = new ElementHandler([], {element: "option", id: "visit-option-dentist", parentElement: config.element("select-visit")})
+        option2.addElement();
+        const eltOption2 = config.element("visit-option-dentist");
+        eltOption2.textContent = "Стоматолог";
+        eltOption2.nodeValue = "dentist";
+
+        const option3 = new ElementHandler([], {element: "option", id: "visit-option-therapist", parentElement: config.element("select-visit")})
+        option3.addElement();
+        const eltOption3 = config.element("visit-option-therapist");
+        eltOption3.textContent = "Терапевт";
+        eltOption3.nodeValue = "therapist";
+    }
+
+    visitFrom () {
+        const form = config.element("visit-form");
+        const name = new Input({type: "text", placeHolder: "ПІБ", id: "visit-name", required: true});
+        form.append(name.createInput());
+        const purpose = new Input({type: "text", placeHolder: "Мета вашого візиту", id: "visit-purpose", required: true});
+        form.append(purpose.createInput());
+        const description = new Input ({type: "text", placeHolder: "Короткий опис візиту", required: true, id: "visit-description"});
+        form.append(description.createInput());
+        
+        const label = this.label();
+        config.content(label, "Терміновість");
+        form.append(label);
+        let select = new ElementHandler([], {element: "select", id: "visit-urgency", parentElement: label});
+        select.addElement();
+
+        const option1 = new ElementHandler([], {element: "option", id: "urgency-option", parentElement: config.element("visit-urgency")})
+        option1.addElement();
+        const eltOption1 = config.element("urgency-option");
+        eltOption1.textContent = "Невідкладна";
+        eltOption1.nodeValue = "urg-high";
+        eltOption1.removeAttribute("id");
+        
+        const option2 = new ElementHandler([], {element: "option", id: "urgency-option", parentElement: config.element("visit-urgency")})
+        option2.addElement();
+        const eltOption2 = config.element("urgency-option");
+        eltOption2.textContent = "Важлива";
+        eltOption2.nodeValue = "urg-middle";
+        eltOption2.removeAttribute("id");
+        
+        const option3 = new ElementHandler([], {element: "option", id: "urgency-option", parentElement: config.element("visit-urgency")})
+        option3.addElement();
+        const eltOption3 = config.element("urgency-option");
+        eltOption3.textContent = "Звичайна";
+        eltOption3.nodeValue = "urg-low";
+        eltOption3.removeAttribute("id");
 
     }
 
-    commonForm () {
-        const visitPurpose = new Input({type: "text", placeHolder: "Мета візиту", id: "visit-purpose", required: true}).createInput();
-        const visitDescription = new TextArea({id: "visitDescription", placeHolder: "Короткий опис візиту"}).createArea;
-        const label = new Input({id: "visitUrgency"}).createLabel();
-        config.element(this.id).append(visitPurpose);
-        config.element(this.id).append(visitDescription);
-        config.element(this.id).append(label);
-        config.element(this.id).prepend(new Input({type: "number", placeHolder: "ПІБ", required: true}).createInput());
+    confirm () {
+        const form = config.element("visit-form");
+        const submit = new ElementHandler([], {element: "button", id: "submit-visit", parentElement: form});
+        submit.addElement();
+        config.element("submit-visit").textContent = "Створити";   
+    }
+    
+    cancel () {
+        const form = config.element("visit-form");
+        const submit = new ElementHandler([], {element: "button", id: "cancel-visit", parentElement: form});
+        submit.addElement();
+        config.element("cancel-visit").textContent = "Закрити";   
     }
 
-    cardiologistForm () {
-        const visitUrgency = new Select({position: config.element("visitUrgency"), id: "select-urgency"}).createSelect();
-        config.element(this.id).append(visitUrgency);
-        const urgentlyOption = new Select({position: config.element("select-urgency")}).option("urgently", "Невідкладно");
-        const importantOption = new Select({position: config.element("select-urgency")}).option("important", "Важливо");
-        const generalOption = new Select({position: config.element("select-urgency")}).option("general", "Звичайно");
-        config.element("select-urgency").append(urgentlyOption);
-        config.element("select-urgency").append(importantOption);
-        config.element("select-urgency").append(generalOption);
-
-        config.element(this.id).append(new Input({type: "text", placeHolder: "Звичайний тиск", required: true}).createInput());
-        config.element(this.id).append(new Input({type: "number", placeHolder: "Індекс маси тіла", required: true}).createInput());
-        config.element(this.id).append(new Input({type: "text", placeHolder: "Минулі хвороби серця", required: true}).createInput());
-        config.element(this.id).append(new Input({type: "number", placeHolder: "Вік", required: true}).createInput());
+    age () {
+        const form = config.element("visit-form");
+        const age = new Input({type: "number", id: "age", required: true, placeHolder: "Вік"});
+        form.append(age.createInput());
     }
-
-    dentistForm () {
-        const label = document.createElement("label");
-        label.textContent = "Дата останнього візиту";
-        label.id("last-visit");
-        config.element(this.id).append(label);
-        config.element("last-visit").append(new Input({type: "date"}).createInput());
-    }
-
 }

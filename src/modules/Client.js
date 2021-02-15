@@ -1,6 +1,9 @@
-export default class Client {
-    constructor({}) {
+import {config} from "./config.js";
 
+
+export default class Client {
+    constructor() {
+        
     }
     async get () {
         const request = await fetch("https://ajax.test-danit.com/api/cards", {
@@ -11,7 +14,7 @@ export default class Client {
         }
     });
 
-    return await request.json();
+    return await request.json()
     }
 
     post () {
