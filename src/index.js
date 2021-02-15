@@ -33,14 +33,11 @@ function createVisit () {
         config.element("select-visit").addEventListener("click", (ev) => {
             let num = config.element("select-visit").selectedIndex
                 if (num === 0 ) {
-                    new VisitCardiologist({position: root, id: "visit-form"}).additionalForm();
-                    config.element("visit-form").remove()
+                    return new VisitCardiologist({position: root, id: "visit-form"}).additionalForm();
                 } else if (num === 1) {
                     return new VisitDentist({position: root, id: "visit-form"}).additionalForm();
-                    // dentistOption()
                 } else if (num === 2) {
                     return new VisitTherapist({position: root, id: "visit-form"}).additionalForm();
-                    // therapistOption()
                 }
         })
 }
