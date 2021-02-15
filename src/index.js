@@ -10,11 +10,8 @@ import Client from "./modules/Client.js"
 import login  from "./modules/login.js";
 import Modal from "./modules/Modal.js";
 
-function createVisit () {
-    const visit  = new Visit({position: root, id: "visit-form"});
-    visit.selectVisit();
-    config.element("create-visit").removeEventListener("click", createVisit);
-}
+config.token() !== null ? config.content(loginOrCreate, "Створити візит") : false;
+loginOrCreate.addEventListener("click", login);
 
 onload = (
     config.token() !== null ?
@@ -29,25 +26,25 @@ onchange = (
     config.loginToggle(true): false
 )
 
-onchange = (
-    config.token() !== null ?
-    config.element("visit-option-cardiologist").addEventListener("select", createCardiologist) : false
-)
-
-
-config.token() !== null ? config.content(loginOrCreate, "Створити візит") : false;
-loginOrCreate.addEventListener("click", login);
-
-
-// config.element("visit-option-cardiologist").addEventListener("click", createCardiologist);
- 
-
-function createCardiologist () {
-    console.log("okay");
+function createVisit () {
+        const visit  = new Visit({position: root, id: "visit-form"});
+        visit.selectVisit();
+        config.element("create-visit").removeEventListener("click", createVisit);
+        config.element("select-visit").addEventListener("click", (ev) => {
+            let num = config.element("select-visit").selectedIndex
+                if (num === 0 ) {
+                    new VisitCardiologist({position: root, id: "visit-form"}).additionalForm();
+                    config.element("visit-form").remove()
+                } else if (num === 1) {
+                    return new VisitDentist({position: root, id: "visit-form"}).additionalForm();
+                    // dentistOption()
+                } else if (num === 2) {
+                    return new VisitTherapist({position: root, id: "visit-form"}).additionalForm();
+                    // therapistOption()
+                }
+        })
 }
     
 
 const client = new Client();
 
-
-const cardiologist = new VisitCardiologist({position: root, id: "visit-form"});
