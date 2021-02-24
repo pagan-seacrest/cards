@@ -29,8 +29,9 @@ export default class ElementHandler {
         return list;
         }
 
-    addElement () {
+    addElement (pre) {
         // this.parent_id !== undefined ? document.getElementById(this.parent_id).append(this.modify()) : false;
+        pre !== undefined ? this.parent.prepend(this.createElement()) :
         this.parent.append(this.createElement());
     }
 

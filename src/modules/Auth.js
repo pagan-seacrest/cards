@@ -36,7 +36,7 @@ export default class Auth extends Modal {
     confirm (id) {
         const confirm = super.submit();
         confirm.textContent = "Вхід";
-        confirm.id = id;
+        confirm.id = "submit-login";
         return confirm;
     }
 

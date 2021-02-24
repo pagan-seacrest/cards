@@ -107,7 +107,8 @@ export default class Visit extends Modal{
         const form = config.element("visit-form");
         const submit = new ElementHandler([], {element: "button", id: "submit-visit", parentElement: form});
         submit.addElement();
-        config.element("submit-visit").textContent = "Створити";   
+        config.element("submit-visit").setAttribute("type", "submit");
+        config.element("submit-visit").textContent = "Створити";
     }
     
     cancel () {
