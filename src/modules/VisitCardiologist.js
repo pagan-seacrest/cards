@@ -19,8 +19,8 @@ export default class VisitCardiologist extends Visit {
             form.append(regularPressure.createInput());
             const bodyMassIndex = new Input({type: "number", placeHolder: "Індекс маси тіла", id: "body-mass-index", required: true});
             form.append(bodyMassIndex.createInput());
-            const heartDeseases = new Input({type: "text", id: "heart-deseases", required: true, placeHolder: "Перенесені хвороби серця"});
-            form.append(heartDeseases.createInput());
+            const heartDiseases = new Input({type: "text", id: "heart-diseases", required: true, placeHolder: "Перенесені хвороби серця"});
+            form.append(heartDiseases.createInput());
             this.age();
             this.confirm();
             this.cancel();

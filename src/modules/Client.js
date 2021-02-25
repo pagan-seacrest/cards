@@ -1,6 +1,5 @@
 import {config} from "./config.js";
 
-
 export default class Client {
     constructor(body) {
         this.body = body;
@@ -41,5 +40,17 @@ export default class Client {
         // console.log(JSON.stringify(res));
         // console.log(JSON.stringify(res[0]["id"]));
         // localStorage.setItem("id", JSON.stringify(res[0]["id"]));
+    }
+
+    async delete (id) {
+        // const req = await 
+        fetch(`https://ajax.test-danit.com/api/cards/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${config.token()}`
+            },
+        });
+        // return await req.json();
     }
 }

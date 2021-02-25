@@ -9,10 +9,12 @@ import VisitTherapist from "./modules/VisitTherapist.js";
 import Client from "./modules/Client.js"
 import login  from "./modules/login.js";
 import Modal from "./modules/Modal.js";
+import Dashboard from "./modules/Dashboard.js";
 
 const client = new Client();
 config.token() !== null ? config.content(loginOrCreate, "Створити візит") : false;
 loginOrCreate.addEventListener("click", login);
+const visitDetails = {}
 
 onload = (
     config.token() !== null ?
@@ -43,14 +45,17 @@ function createVisit () {
     config.element("select-visit").addEventListener("click", () => {
         let num = config.element("select-visit").selectedIndex
         if (num === 0 ) {
+            visitDetails.doctor = "Кардіолог";
             resolve();
             sessionStorage.setItem("visit", "cardiologist");
             return new VisitCardiologist({position: root, id: "visit-form"}).additionalForm();
         } else if (num === 1) {
+            visitDetails.doctor = "Дантист";
                 resolve();
                 sessionStorage.setItem("visit", "dentist");
                 return new VisitDentist({position: root, id: "visit-form"}).additionalForm();
             } else if (num === 2) {
+                visitDetails.doctor = "Терапевт";
                 resolve();
                 sessionStorage.setItem("visit", "therapist");
                 return new VisitTherapist({position: root, id: "visit-form"}).additionalForm();
@@ -66,8 +71,7 @@ promise.then(() => {
         res.length === 0 ? emptyCase() : false;
     });
     // ========================
-
-    const visitDetails = {}
+    visitDetails.urgency = config.element("visit-urgency").firstElementChild.value;
     
     config.element("visit-name").addEventListener("change", (ev) => visitDetails.name = ev.target.value);
     config.element("visit-purpose").addEventListener("change", (ev) => visitDetails.purpose = ev.target.value);
@@ -77,24 +81,72 @@ promise.then(() => {
     if (sessionStorage.getItem("visit") === "cardiologist") {
         config.element("age").addEventListener("change", (ev) => visitDetails.age = ev.target.value);
         config.element("visit-pressure").addEventListener("change", (ev) => visitDetails.pressure = ev.target.value);
-        config.element("body-mass-index").addEventListener("change", (ev) => visitDetails["body-mass-index"] = ev.target.value);
-        config.element("heart-deseases").addEventListener("change", (ev) => visitDetails["heart-deseases"] = ev.target.value);
+        config.element("body-mass-index").addEventListener("change", (ev) => visitDetails.bodyMassIndex = ev.target.value);
+        config.element("heart-diseases").addEventListener("change", (ev) => visitDetails.heartDiseases = ev.target.value);
     }
 
     sessionStorage.getItem("visit") === "dentist" ?
-    config.element("last-visit-date").addEventListener("change", (ev) => visitDetails["last-visit-date"] = ev.target.value) : false;
+    config.element("last-visit-date").addEventListener("change", (ev) => visitDetails.lastVisitDate = ev.target.value) : false;
 
     sessionStorage.getItem("visit") === "therapist" ?
     config.element("age").addEventListener("change", (ev) => visitDetails.age = ev.target.value) : false;
 
     
-    config.element("submit-visit").addEventListener("click", (ev) => {
-        ev.preventDefault();
-        const client = new Client(visitDetails);
-        client.post().then(res => {
-        localStorage.setItem("id", res["id"]);
-        visitDetails.id = res["id"];
-        
-        });
-    });
+    config.element("submit-visit").addEventListener("click", postReq);
+
+        function postReq (event) {
+            event.preventDefault();
+            const client = new Client(visitDetails);
+            client.post().then(res => {
+            localStorage.setItem("id", res["id"]);
+            visitDetails.id = res["id"];
+            });
+            config.element("submit-visit").removeEventListener("click", postReq);
+            config.element("visit-form").firstElementChild.remove();
+            config.element("visit-form").style.display = "none";
+            
+            
+            const dashborad = new Dashboard(visitDetails);
+                    
+            const visitShow = new Promise((resolve) => {
+                dashborad.setupCard();
+                    resolve();
+            });
+
+            visitShow.then(() => {
+                config.element("card-unfold").addEventListener("click", unfold);
+            })
+
+            function unfold () {
+                dashborad.unfold();
+                config.element("card-unfold").removeEventListener("click", unfold);
+                return config.element("card-unfold").addEventListener("click", brief);
+            }
+
+            function brief () {
+                dashborad.briefly();
+                config.element("card-unfold").removeEventListener("click", brief);
+                return config.element("card-unfold").addEventListener("click", unfold);
+            }
+            
+            localStorage.setItem(`${document.getElementsByClassName("card").length - 1}`, JSON.stringify(visitDetails));
+            
+        }
 });
+
+// client.delete(11147).then(() => client.get().then(res => console.log(res)));
+// client.get().then(res => console.log(res));
+
+
+// let obt = {
+//     name: "text",
+//     sex: "sex-text"
+// }
+
+// localStorage.setItem("obt", JSON.stringify(obt));
+
+// obt = localStorage.getItem("obt");
+
+// obt = JSON.parse(obt)
+
+// console.log(obt.name);

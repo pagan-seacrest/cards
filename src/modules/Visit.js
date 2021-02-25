@@ -55,7 +55,7 @@ export default class Visit extends Modal{
         const option2 = new ElementHandler([], {element: "option", id: "visit-option-dentist", parentElement: config.element("select-visit")})
         option2.addElement();
         const eltOption2 = config.element("visit-option-dentist");
-        eltOption2.textContent = "Стоматолог";
+        eltOption2.textContent = "Дантист";
         eltOption2.nodeValue = "dentist";
 
         const option3 = new ElementHandler([], {element: "option", id: "visit-option-therapist", parentElement: config.element("select-visit")})
