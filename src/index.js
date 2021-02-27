@@ -92,8 +92,9 @@ promise.then(() => {
     config.element("age").addEventListener("change", (ev) => visitDetails.age = ev.target.value) : false;
 
     
+    
     config.element("submit-visit").addEventListener("click", postReq);
-
+    
         function postReq (event) {
             event.preventDefault();
             const client = new Client(visitDetails);
@@ -110,7 +111,7 @@ promise.then(() => {
                     
             const visitShow = new Promise((resolve) => {
                 dashborad.setupCard();
-                    resolve();
+                resolve();
             });
 
             visitShow.then(() => {
@@ -130,23 +131,23 @@ promise.then(() => {
             }
             
             localStorage.setItem(`${document.getElementsByClassName("card").length - 1}`, JSON.stringify(visitDetails));
+
+            const [...editVisit] = document.getElementsByClassName("edit-card")
+            editVisit.forEach((elt) =>{
+                elt.addEventListener("click", (ev) => {
+                    dashborad.edit(ev.target.id);
+
+                });
+            });
+
+            // function edit (event) {
+            // }
+
+            // dashborad.edit(config.element("card-0"));
             
         }
 });
 
-// client.delete(11147).then(() => client.get().then(res => console.log(res)));
+
+// client.delete(11181).then(() => client.get().then(res => console.log(res)));
 // client.get().then(res => console.log(res));
-
-
-// let obt = {
-//     name: "text",
-//     sex: "sex-text"
-// }
-
-// localStorage.setItem("obt", JSON.stringify(obt));
-
-// obt = localStorage.getItem("obt");
-
-// obt = JSON.parse(obt)
-
-// console.log(obt.name);

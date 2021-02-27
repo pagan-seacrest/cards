@@ -1,4 +1,4 @@
-import { config } from "./config.js";
+import { config, root } from "./config.js";
 import Client from "./Client.js";
 
 export default class Dashboard {
@@ -22,14 +22,84 @@ export default class Dashboard {
 
     }
 
-    edit () {
+    edit (id) {    
+        let visit = localStorage.getItem(`${id.slice(-1)}`);
+        visit = JSON.parse(visit);
+        document.querySelector(".dashboard").insertAdjacentHTML("beforeend", 
+        `<form action="" id="edit-form">
+            <input id="edit-name" type="text" value="${visit.name}" placeholder="ПІБ">
+            <input id="edit-purpose" type="text" value="${visit.purpose}" placeholder="Мета візиту">
+            <input id="edit-description" type="text" value="${visit.description}" placeholder="Опис">
+            <label id="edit-urgency" for="edit-form">
+                Терміновість
+                <select id="edit-select-urgency">
+                     <option>Невідкладна</option>
+                     <option>Важлива</option>
+                     <option>Звичайна</option>
+                </select>
+            </label>
+        </form>`);
+
+        config.element("edit-select-urgency").addEventListener("change", () => {
+            config.element("edit-select-urgency").selectedIndex === 0 ? visit.urgency = "Невідкладна" : false;
+            config.element("edit-select-urgency").selectedIndex === 1 ? visit.urgency = "Важлива" : false;
+            config.element("edit-select-urgency").selectedIndex === 2 ? visit.urgency = "Звичайна" : false;
+        });
+
+        if (visit.doctor === "Кардіолог") {
+            config.element("edit-form").insertAdjacentHTML("beforeend", 
+            `<input id="edit-pressure" type="text" value="${visit.pressure}" placeholder="Тиск зазвичай">
+             <input id="edit-body-mass-index" type="number" value="${visit.bodyMassIndex}" placeholder="Індекс маси тіла">
+             <input id="edit-heart-diseases" type="text" value="${visit.heartDiseases}" placeholder="Перенесені хвороби серця">
+             <input id="edit-age" type="number" value="${visit.age}" placeholder="Вік">
+             <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
+             <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`);
+
+            
+        } else if (visit.doctor === "Дантист") {
+            config.element("edit-form").insertAdjacentHTML("beforeend",
+            `<label id="edit-last-visit-date" for="edit-form">
+                 Дата останнього візиту
+                 <input id="edit-date" type="date">
+             </label>
+             <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
+             <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`)
+        } else if (visit.doctor === "Терапевт") {
+            config.element("edit-form").insertAdjacentHTML("beforeend",
+            `<input id="edit-age" type="number" value="${visit.age}" placeholder="Вік">
+             <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
+             <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`)
+        }
+
+        config.element("edit-confirm").addEventListener("click", (ev) => {
+            ev.preventDefault();
+            visit.name = config.element("edit-name").value;
+            visit.purpose = config.element("edit-purpose").value;
+            visit.description = config.element("edit-description").value;
+            
+            if (visit.doctor === "Кардіолог") {
+                    visit.pressure = config.element("edit-pressure").value;
+                    visit.bodyMassIndex = config.element("edit-body-mass-index").value;
+                    visit.heartDiseases = config.element("edit-heart-diseases").value;
+                    visit.age = config.element("edit-age").value;
+                } 
+            visit.doctor === "Дантист" ? visit.lastVisitDate = config.element("edit-date").value : false
+            visit.doctor === "Терапевт" ? visit.age = config.element("edit-age").value : false;
+            console.log(visit);
+        });
+        
+        const edit = new Client()
 
     }
 
     setupCard () {
+        const dashboard = document.createElement("div");
+        dashboard.classList.add("dashboard");
+        document.getElementById("root").append(dashboard);
+
         const card = document.createElement("div");
         card.classList.add("card");
-        document.getElementById("root").append(card);
+        dashboard.append(card);
 
         const title = document.createElement("header");
         title.classList.add("card-title");
@@ -69,12 +139,14 @@ export default class Dashboard {
 
         const editButton = document.createElement("button");
         editButton.classList.add("edit-card");
+        editButton.id = `card-${document.getElementsByClassName("dashboard").length - 1}`;
+        editButton
         editButton.textContent = "Редагувати";
         card.append(editButton);
         
         const xButton = document.createElement("button");
         xButton.classList.add("delete-card");
-        xButton.style.content = "X";
+        xButton.textContent = "X";
         card.append(xButton);
     }
 
@@ -165,9 +237,7 @@ export default class Dashboard {
 
         const folding = config.element("card-unfold");
         
-        // folding.removeEventListener("click", this.unfold);
         folding.textContent = "Коротко";
-        // folding.addEventListener("click", this.briefly);
     }
 
     briefly () {
@@ -192,9 +262,7 @@ export default class Dashboard {
         
         captions.forEach(elt => elt.remove());
 
-        // folding.removeEventListener("click", this.briefly);
         folding.textContent = "Детальніше";
-        // folding.addEventListener("click", this.unfold);
     }
 
 }
