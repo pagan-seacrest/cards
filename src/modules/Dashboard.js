@@ -13,231 +13,270 @@ export default class Dashboard {
         this.pressure = pressure;
         this.bodyMassIndex = bodyMassIndex;
         this.lastVisitDate = lastVisitDate;
-        this.age = age;
-
+        this.age = age;                 
         
     }
 
     update () {
+        document.getElementById("dashboard") === null ?
+        root.insertAdjacentHTML("afterbegin", `<div id="dashboard" class="dashboard"></div>`) : false;
+        const client = new Client();
+        client.get().then((res) => {
 
+            res.length !== 0 ? res.forEach((card) => {
+                localStorage.setItem(`${card.id}`, `${JSON.stringify(card)}`);
+
+                if (card.content.doctor === "Кардіолог") {
+                document.getElementById("dashboard").insertAdjacentHTML("beforeend", 
+                    `<div class="card">
+                        <header class="card-title">${card.content.doctor}</header>
+                        <ul class="card-content card${card.id}">
+                            <li class="card-caption-default">Ім'я<p class="card-name">${card.content.name}</p></li>
+                            <li class="card-caption-default">Терміновість<p class="card-urgency">${card.content.urgency}</p></li>
+                        </ul>
+                        <button class="card-more-info" id="folding${card.id}">Детальніше</button>
+                        <button class="edit-card" id="edit${card.id}">Редагувати</button>
+                        <button class="delete-card" id="delete${card.id}">X</button>
+                    </div>`);
+
+                    this.folding(card.id, card.content);
+                    this.edit(card.id, card.content);
+                    document.querySelector(".empty") !== null ? document.querySelector(".empty").remove() : false;
+                } else if (card.content.doctor === "Дантист") {
+                    document.getElementById("dashboard").insertAdjacentHTML("beforeend", 
+                    `<div class="card">
+                        <header class="card-title">${card.content.doctor}</header>
+                        <ul class="card-content card${card.id}">
+                            <li class="card-caption-default">Ім'я<p class="card-name">${card.content.name}</p></li>
+                            <li class="card-caption-default">Терміновість<p class="card-urgency">${card.content.urgency}</p></li>
+                            </ul>
+                            <button class="card-more-info" id="folding${card.id}">Детальніше</button>
+                            <button class="edit-card" id="edit${card.id}">Редагувати</button>
+                            <button class="delete-card" id="delete${card.id}">X</button>
+                            </div>`);
+                            
+                    this.folding(card.id, card.content);
+                    this.edit(card.id, card.content);
+                    document.querySelector(".empty") !== null ? document.querySelector(".empty").remove() : false;
+                } else if (card.content.doctor === "Терапевт") {
+                    document.getElementById("dashboard").insertAdjacentHTML("beforeend", 
+                    `<div class="card">
+                        <header class="card-title">${card.content.doctor}</header>
+                        <ul class="card-content card${card.id}">
+                            <li class="card-caption-default">Ім'я<p class="card-name">${card.content.name}</p></li>
+                            <li class="card-caption-default">Терміновість<p class="card-urgency">${card.content.urgency}</p></li>
+                        </ul>
+                        <button class="card-more-info" id="folding${card.id}">Детальніше</button>
+                        <button class="edit-card" id="edit${card.id}">Редагувати</button>
+                        <button class="delete-card" id="delete${card.id}">X</button>
+                    </div>`);
+
+                    document.querySelector(".empty") !== null ? document.querySelector(".empty").remove() : false;
+                    this.folding(card.id, card.content);
+                    this.edit(card.id, card.content);
+                }
+            }) : document.querySelector("#dashboard").insertAdjacentHTML("beforeend",
+            `<p class="empty">Жодного візиту не було створено</p>`);
+        })
     }
 
-    edit (id) {    
-        let visit = localStorage.getItem(`${id.slice(-1)}`);
-        visit = JSON.parse(visit);
-        document.querySelector(".dashboard").insertAdjacentHTML("beforeend", 
-        `<form action="" id="edit-form">
-            <input id="edit-name" type="text" value="${visit.name}" placeholder="ПІБ">
-            <input id="edit-purpose" type="text" value="${visit.purpose}" placeholder="Мета візиту">
-            <input id="edit-description" type="text" value="${visit.description}" placeholder="Опис">
-            <label id="edit-urgency" for="edit-form">
-                Терміновість
-                <select id="edit-select-urgency">
-                     <option>Невідкладна</option>
-                     <option>Важлива</option>
-                     <option>Звичайна</option>
-                </select>
-            </label>
-        </form>`);
 
-        config.element("edit-select-urgency").addEventListener("change", () => {
-            config.element("edit-select-urgency").selectedIndex === 0 ? visit.urgency = "Невідкладна" : false;
-            config.element("edit-select-urgency").selectedIndex === 1 ? visit.urgency = "Важлива" : false;
-            config.element("edit-select-urgency").selectedIndex === 2 ? visit.urgency = "Звичайна" : false;
-        });
+    folding (id, visit) {
+        document.getElementById(`folding${id}`).addEventListener("click", unfold);
 
-        if (visit.doctor === "Кардіолог") {
-            config.element("edit-form").insertAdjacentHTML("beforeend", 
-            `<input id="edit-pressure" type="text" value="${visit.pressure}" placeholder="Тиск зазвичай">
-             <input id="edit-body-mass-index" type="number" value="${visit.bodyMassIndex}" placeholder="Індекс маси тіла">
-             <input id="edit-heart-diseases" type="text" value="${visit.heartDiseases}" placeholder="Перенесені хвороби серця">
-             <input id="edit-age" type="number" value="${visit.age}" placeholder="Вік">
-             <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
-             <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`);
-
-            
-        } else if (visit.doctor === "Дантист") {
-            config.element("edit-form").insertAdjacentHTML("beforeend",
-            `<label id="edit-last-visit-date" for="edit-form">
-                 Дата останнього візиту
-                 <input id="edit-date" type="date">
-             </label>
-             <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
-             <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`)
-        } else if (visit.doctor === "Терапевт") {
-            config.element("edit-form").insertAdjacentHTML("beforeend",
-            `<input id="edit-age" type="number" value="${visit.age}" placeholder="Вік">
-             <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
-             <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`)
-        }
-
-        config.element("edit-confirm").addEventListener("click", (ev) => {
-            ev.preventDefault();
-            visit.name = config.element("edit-name").value;
-            visit.purpose = config.element("edit-purpose").value;
-            visit.description = config.element("edit-description").value;
-            
+        function unfold () {
             if (visit.doctor === "Кардіолог") {
-                    visit.pressure = config.element("edit-pressure").value;
-                    visit.bodyMassIndex = config.element("edit-body-mass-index").value;
-                    visit.heartDiseases = config.element("edit-heart-diseases").value;
-                    visit.age = config.element("edit-age").value;
-                } 
-            visit.doctor === "Дантист" ? visit.lastVisitDate = config.element("edit-date").value : false
-            visit.doctor === "Терапевт" ? visit.age = config.element("edit-age").value : false;
-            console.log(visit);
-        });
-        
-        const edit = new Client()
+                document.querySelector(`.card${id}`).insertAdjacentHTML("beforeend", `
+                <li class="card-caption fold${id}">Мета візиту<p class="card-purpose">${visit.purpose}</p></li>
+                <li class="card-caption fold${id}">Опис<p class="card-description">${visit.description}</p></li>
+                <li class="card-caption fold${id}">Тиск<p class="card-pressure">${visit.pressure}</p></li>
+                <li class="card-caption fold${id}">Хвороби серця<p class="card-heart-diseases">${visit.heartDiseases}</p></li>
+                <li class="card-caption fold${id}">Індекс маси тіла<p class="card-body-mass-index">${visit.bodyMassIndex}</p></li
+                <li class="card-caption fold${id}">Вік<p class="card-age">${visit.age}</p></li>`);
 
+                document.getElementById(`folding${id}`).textContent = "Коротко";
+                
+            } else if (visit.doctor === "Дантист") {
+                document.querySelector(`.card${id}`).insertAdjacentHTML("beforeend", `
+                <li class="card-caption fold${id}">Мета візиту<p class="card-purpose">${visit.purpose}</p></li>
+                <li class="card-caption fold${id}">Опис<p class="card-description">${visit.description}</p></li>
+                <li class="card-caption fold${id}">Дата останнього візиту<p class="card-date">${visit.lastVisitDate}</p></li>`);
+
+                document.getElementById(`folding${id}`).textContent = "Коротко";
+
+            } else if (visit.doctor === "Терапевт") {
+                document.querySelector(`.card${id}`).insertAdjacentHTML("beforeend", `
+                <li class="card-caption fold${id}">Мета візиту<p class="card-purpose">${visit.purpose}</p></li>
+                <li class="card-caption fold${id}">Опис<p class="card-description">${visit.description}</p></li>
+                <li class="card-caption fold${id}">Вік<p class="card-age">${visit.age}</p></li>`);
+                
+                document.getElementById(`folding${id}`).textContent = "Коротко";
+            }
+            
+            document.getElementById(`folding${id}`).removeEventListener("click", unfold);
+            return document.getElementById(`folding${id}`).addEventListener("click", fold);
+        }
+        
+        function fold () {
+            const [...folds] = document.getElementsByClassName(`fold${id}`);
+            folds.forEach(details => details.remove());
+            
+            document.getElementById(`folding${id}`).removeEventListener("click", fold);
+            document.getElementById(`folding${id}`).textContent = "Детальніше";
+            
+            return document.getElementById(`folding${id}`).addEventListener("click", unfold);
+        }
+        
+    }
+    
+    async edit (id, visit) {
+        const editedVisit = {
+            id: id,
+            doctor: visit.doctor,
+            urgency: visit.urgency
+        }
+         const changeVisit = new Promise ((resolve) => {
+
+        document.getElementById(`edit${id}`).addEventListener("click", (ev) => {
+            document.querySelector(".dashboard").insertAdjacentHTML("beforeend", 
+                `<form action="" id="edit-form">
+                    <input id="edit-name" type="text" value="${visit.name}" placeholder="ПІБ">
+                    <input id="edit-purpose" type="text" value="${visit.purpose}" placeholder="Мета візиту">
+                    <input id="edit-description" type="text" value="${visit.description}" placeholder="Опис">
+                    <label id="edit-urgency" for="edit-form">
+                        Терміновість
+                        <select id="edit-select-urgency">
+                             <option>Невідкладна</option>
+                             <option>Важлива</option>
+                             <option>Звичайна</option>
+                        </select>
+                    </label>
+                </form>`);
+                
+            config.element("edit-select-urgency").addEventListener("change", (ev) => {
+                ev.target.selectedIndex === 0 ? editedVisit.urgency = "Невідкладна" : false;
+                ev.target.selectedIndex === 1 ? editedVisit.urgency = "Важлива" : false;
+                ev.target.selectedIndex === 2 ? editedVisit.urgency = "Звичайна" : false;
+            });
+
+            if (visit.doctor === "Кардіолог") {
+                config.element("edit-form").insertAdjacentHTML("beforeend", 
+                `<input id="edit-pressure" type="text" value="${visit.pressure}" placeholder="Тиск зазвичай">
+                 <input id="edit-body-mass-index" type="number" value="${visit.bodyMassIndex}" placeholder="Індекс маси тіла">
+                 <input id="edit-heart-diseases" type="text" value="${visit.heartDiseases}" placeholder="Перенесені хвороби серця">
+                 <input id="edit-age" type="number" value="${visit.age}" placeholder="Вік">
+                 <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
+                 <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`);
+                 resolve();
+                
+            } else if (visit.doctor === "Дантист") {
+                config.element("edit-form").insertAdjacentHTML("beforeend",
+                `<label id="edit-last-visit-date" for="edit-form">
+                     Дата останнього візиту
+                     <input id="edit-date" type="date">
+                 </label>
+                 <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
+                 <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`);
+                 resolve();
+
+            } else if (visit.doctor === "Терапевт") {
+                document.querySelector("#edit-form").insertAdjacentHTML("beforeend",
+                `<input id="edit-age" type="number" value="${visit.age}" placeholder="Вік">
+                 <button type="submit" class="edit-buttons" id="edit-confirm">Підтвердити</button>
+                 <button type="submit" class="edit-buttons" id="edit-cancel">Відмінити</button>`);
+                resolve();
+            }
+        });
+        });
+
+        changeVisit.then(() => {
+
+            config.element("edit-confirm").addEventListener("click", confirmEdit);
+            
+            async function confirmEdit (ev) {
+                ev.preventDefault();
+
+                editedVisit.name = config.element("edit-name").value;
+                editedVisit.purpose = config.element("edit-purpose").value;
+                editedVisit.description = config.element("edit-description").value;
+                
+                if (visit.doctor === "Кардіолог") {
+                    editedVisit.pressure = config.element("edit-pressure").value;
+                    editedVisit.bodyMassIndex = config.element("edit-body-mass-index").value;
+                    editedVisit.heartDiseases = config.element("edit-heart-diseases").value;
+                    editedVisit.age = config.element("edit-age").value;
+                }
+                visit.doctor === "Дантист" ? editedVisit.lastVisitDate = config.element("edit-date").value : false
+                visit.doctor === "Терапевт" ? editedVisit.age = config.element("edit-age").value : false;
+                
+                config.element("edit-confirm").removeEventListener("click", confirmEdit);
+                config.element("edit-form").remove();
+
+                return await new Client(editedVisit).put(editedVisit.id);
+            }
+            
+        });
     }
 
     setupCard () {
-        const dashboard = document.createElement("div");
-        dashboard.classList.add("dashboard");
-        document.getElementById("root").append(dashboard);
-
-        const card = document.createElement("div");
-        card.classList.add("card");
-        dashboard.append(card);
-
-        const title = document.createElement("header");
-        title.classList.add("card-title");
-        title.textContent = this.doctor;
-        card.prepend(title);
-
-        const content = document.createElement("ul");
-        content.classList.add("card-content");
-        content.id = "card-details-fields";
-        card.append(content);
-
-        const nameCaption = document.createElement("li");
-        nameCaption.textContent = "Ім'я";
-        nameCaption.classList.add("card-caption-default");
-        content.append(nameCaption);
-
-        const name = document.createElement("p");
-        name.classList.add("card-name");
-        name.textContent = this.name;
-        nameCaption.append(name);
-
-        const urgencyCaption = document.createElement("li");
-        urgencyCaption.textContent = "Терміновість";
-        urgencyCaption.classList.add("card-caption-default");
-        content.append(urgencyCaption);
-        
-        const urgency = document.createElement("p");
-        urgency.classList.add("card-urgency");
-        urgency.textContent = this.urgency;
-        urgencyCaption.append(urgency);
-
-        const unfoldButton = document.createElement("button");
-        unfoldButton.classList.add("card-more-info");
-        unfoldButton.id = "card-unfold";
-        unfoldButton.textContent = "Детальніше";
-        card.append(unfoldButton);
-
-        const editButton = document.createElement("button");
-        editButton.classList.add("edit-card");
-        editButton.id = `card-${document.getElementsByClassName("dashboard").length - 1}`;
-        editButton
-        editButton.textContent = "Редагувати";
-        card.append(editButton);
-        
-        const xButton = document.createElement("button");
-        xButton.classList.add("delete-card");
-        xButton.textContent = "X";
-        card.append(xButton);
+        document.getElementById("dashboard").insertAdjacentHTML("beforeend", `
+        <div class="card">
+            <header class="card-title">${this.doctor}</header>
+            <ul class="card-content" id="card-details-fields">
+                <li class="card-caption-default">Ім'я
+                    <p class="card-name">${this.name}</p>
+                </li>
+                <li class="card-caption-default">Терміновість
+                    <p class="card-urgency">${this.urgency}</p>
+                </li>
+            </ul>
+            <button class="card-button card-more-info" id="card-unfold">Детальніше</>
+            <button class="card-button edit-card">Редагувати</>
+            <button class="delete-card">X</>
+        </div>`);        
     }
 
-    unfold () {
-        let visitDetails = localStorage.getItem(`${document.getElementsByClassName("card").length - 1}`);
+    unfold (id) {
+        let visitDetails = localStorage.getItem(`${id}`);
         visitDetails = JSON.parse(visitDetails);
         
-        const list = config.element("card-details-fields");
-
-        const purposeCaption = document.createElement("li");
-        purposeCaption.classList.add("card-caption");
-        purposeCaption.textContent = "Мета візиту";
-        list.append(purposeCaption);
-        
-        const purpose = document.createElement("p");
-        purpose.classList.add("card-purpose");
-        purpose.textContent = visitDetails.purpose;
-        purposeCaption.append(purpose);
-
-        const descriptionCaption = document.createElement("li");
-        descriptionCaption.classList.add("card-caption");
-        descriptionCaption.textContent = "Опис";
-        list.append(descriptionCaption);
-        
-        const description = document.createElement("p");
-        description.classList.add("card-description");
-        description.textContent = visitDetails.description;
-        descriptionCaption.append(description);
+        document.getElementById(`folding${id}`).insertAdjacentHTML("beforeend", `
+        <li class="card-caption">Мета візиту
+            <p class="card-purpose">${visitDetails.purpose}</p>
+        </li>
+        <li class="card-caption">Опис
+            <p class="card-description">${visitDetails.description}</p>
+        </li>`);
 
         if (visitDetails.doctor === "Кардіолог") {
-            const pressureCaption = document.createElement("li");
-            pressureCaption.classList.add("card-caption");
-            pressureCaption.textContent = "Тиск";
-            list.append(pressureCaption);
-            const pressure = document.createElement("p");
-            pressure.classList.add("card-pressure");
-            pressure.textContent = visitDetails.pressure;
-            pressureCaption.append(pressure);
-            
-
-            const heartDiseasesCaption = document.createElement("li");
-            heartDiseasesCaption.classList.add("card-caption");
-            heartDiseasesCaption.textContent = "Хвороби серця";
-            list.append(heartDiseasesCaption);
-            const heartDiseases = document.createElement("p");
-            heartDiseases.classList.add("card-heart-diseases");
-            heartDiseases.textContent = visitDetails.heartDiseases;
-            heartDiseasesCaption.append(heartDiseases);
-
-            const bodyMassIndexCaption = document.createElement("li");
-            bodyMassIndexCaption.classList.add("card-caption");
-            bodyMassIndexCaption.textContent = "Індекс маси тіла";
-            list.append(bodyMassIndexCaption);
-            const bodyMassIndex = document.createElement("p");
-            bodyMassIndex.classList.add("card-body-mass-index");
-            bodyMassIndex.textContent = visitDetails.bodyMassIndex;
-            bodyMassIndexCaption.append(bodyMassIndex);
-
-            const ageCaption = document.createElement("li");
-            ageCaption.classList.add("card-caption");
-            ageCaption.textContent = "Вік";
-            list.append(ageCaption);
-            const age = document.createElement("p");
-            age.classList.add("card-age");
-            age.textContent = visitDetails.age;
-            ageCaption.append(age);
+            document.getElementById(`folding${id}`).insertAdjacentHTML("afterbegin", `
+                <li class="card-caption">Тиск
+                    <p class="card-pressure">${visitDetails.pressure}</p>
+                </li>
+                <li class="card-caption">Хвороби серця
+                    <p class="card-heart-diseases">${visitDetails.heartDiseases}</p>
+                </li>
+                <li class="card-caption">Індекс маси тіла
+                    <p class="card-body-mass-index">${visitDetails.bodyMassIndex}</p>
+                </li>
+                <li class="card-caption">Вік
+                    <p class="card-age">${visitDetails.age}</p>
+                </li>`);
 
         } else if (visitDetails.doctor === "Дантист") {
-            const lastVisitCaption = document.createElement("li");
-            lastVisitCaption.classList.add("card-caption");
-            lastVisitCaption.textContent = "Дата останнього візиту";
-            list.append(lastVisitCaption);
-            const lastVisit = document.createElement("p");
-            lastVisit.classList.add("card-last-visit-date");
-            lastVisit.textContent = visitDetails.lastVisitDate;
-            lastVisitCaption.append(lastVisit);
+            document.getElementById(`folding${id}`).insertAdjacentHTML("beforebegin", `
+                <li class="card-caption">Дата останнього візиту
+                    <p class="card-last-visit-date">${visitDetails.lastVisitDate}</p>
+                </li>`);
 
         } else if (visitDetails.doctor === "Терапевт") {
-            const ageCaption = document.createElement("li");
-            ageCaption.classList.add("card-caption");
-            ageCaption.textContent = "Вік";
-            list.append(ageCaption);
-            const age = document.createElement("li");
-            age.classList.add("card-age");
-            age.textContent = visitDetails.age;
-            list.append(age);
+            document.getElementById(`folding${id}`).insertAdjacentHTML("beforebegin", `
+                <li class="card-caption">Вік
+                    <p class="card-age">${visitDetails.age}</p>
+                </li>`);
         }
 
-        const folding = config.element("card-unfold");
-        
-        folding.textContent = "Коротко";
+        document.getElementById(`folding${id}`).textContent = "Коротко";
     }
 
     briefly () {
@@ -263,6 +302,15 @@ export default class Dashboard {
         captions.forEach(elt => elt.remove());
 
         folding.textContent = "Детальніше";
+    }
+
+    action () {
+        const client = new Client();
+        client.get().then((res) => {
+            res.forEach((card) => {
+                
+            });
+        });
     }
 
 }
