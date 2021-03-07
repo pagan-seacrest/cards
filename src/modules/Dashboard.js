@@ -193,9 +193,10 @@ export default class Dashboard {
 
             config.element("edit-confirm").addEventListener("click", confirmEdit);
             
-            async function confirmEdit (ev) {
+            function confirmEdit (ev) {
+                
                 ev.preventDefault();
-
+                
                 editedVisit.name = config.element("edit-name").value;
                 editedVisit.purpose = config.element("edit-purpose").value;
                 editedVisit.description = config.element("edit-description").value;
@@ -212,7 +213,7 @@ export default class Dashboard {
                 config.element("edit-confirm").removeEventListener("click", confirmEdit);
                 config.element("edit-form").remove();
 
-                return await new Client(editedVisit).put(editedVisit.id);
+                return new Client(editedVisit).put(editedVisit.id);
             }
             
         });

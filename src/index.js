@@ -16,10 +16,7 @@ config.token() !== null ? config.content(loginOrCreate, "Створити віз
 loginOrCreate.addEventListener("click", login);
 const visitDetails = {}
 
-onload = (config.token() !== null ? 
-new Promise((resolve) => {
-    new Dashboard({}).update()
-}) : false)
+onload = (config.token() !== null ? new Dashboard({}).update() : false)
 
 onload = (config.token() !== null ? config.element("button").id = "create-visit": false)
 onchange = (config.token() !== null ? config.loginToggle(true): false )

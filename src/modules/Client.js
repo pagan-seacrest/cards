@@ -25,7 +25,11 @@ export default class Client {
             "Authorization": `Bearer ${config.token()}`
             }
         })
-        return await req.json();
+        const step =  await req.json();
+        const reload = new Dashboard({});
+        reload.update();
+        console.log("step1");
+        return step;
     }
 
     async post () {
