@@ -41,6 +41,7 @@ export default class Dashboard {
 
                     this.folding(card.id, card.content);
                     this.edit(card.id, card.content);
+                    this.remove(card.id);
                     document.querySelector(".empty") !== null ? document.querySelector(".empty").remove() : false;
                 } else if (card.content.doctor === "Дантист") {
                     document.getElementById("dashboard").insertAdjacentHTML("beforeend", 
@@ -57,6 +58,7 @@ export default class Dashboard {
                             
                     this.folding(card.id, card.content);
                     this.edit(card.id, card.content);
+                    this.remove(card.id);
                     document.querySelector(".empty") !== null ? document.querySelector(".empty").remove() : false;
                 } else if (card.content.doctor === "Терапевт") {
                     document.getElementById("dashboard").insertAdjacentHTML("beforeend", 
@@ -74,6 +76,7 @@ export default class Dashboard {
                     document.querySelector(".empty") !== null ? document.querySelector(".empty").remove() : false;
                     this.folding(card.id, card.content);
                     this.edit(card.id, card.content);
+                    this.remove(card.id);
                 }
             }) : document.querySelector("#dashboard").insertAdjacentHTML("beforeend",
             `<p class="empty">Жодного візиту не було створено</p>`);
@@ -217,6 +220,18 @@ export default class Dashboard {
             }
             
         });
+    }
+
+    remove (id) {
+        const client = new Client();
+        config.element(`delete${id}`).addEventListener("click", del);
+
+        function del (event) {
+            client.delete(id);
+            config.element(`delete${id}`).removeEventListener("click", del);
+            event.target.parentElement.remove();
+        }
+
     }
 
     setupCard () {

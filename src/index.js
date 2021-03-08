@@ -164,5 +164,7 @@ const c  = new Client({
 });
 
 client.get().then(res => console.log(res));
+const d = new Dashboard({})
+// d.remove(11740)
 
 // client.delete(11739).then(() => client.get().then(res => console.log(res)));
