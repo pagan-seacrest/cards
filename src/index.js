@@ -16,10 +16,7 @@ config.token() !== null ? config.content(loginOrCreate, "Створити віз
 loginOrCreate.addEventListener("click", login);
 const visitDetails = {}
 
-onload = (config.token() !== null ? 
-new Promise((resolve) => {
-    new Dashboard({}).update()
-}) : false)
+onload = (config.token() !== null ? new Dashboard({}).update() : false)
 
 onload = (config.token() !== null ? config.element("button").id = "create-visit": false)
 onchange = (config.token() !== null ? config.loginToggle(true): false )
@@ -167,5 +164,7 @@ const c  = new Client({
 });
 
 client.get().then(res => console.log(res));
+const d = new Dashboard({})
+// d.remove(11740)
 
 // client.delete(11739).then(() => client.get().then(res => console.log(res)));

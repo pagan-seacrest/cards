@@ -52,13 +52,16 @@ export default class Client {
             },
             body: JSON.stringify(this.body)
         });
-        
-        return await req.json();
+        const step = await req.json();
+        const reload = new Dashboard({});
+        document.getElementById("dashboard").remove();
+        reload.update();
+        return step;
     }
 
     async delete (id) {
         // const req = await 
-        fetch(`https://ajax.test-danit.com/api/cards/${id}`, {
+        return await fetch(`https://ajax.test-danit.com/api/cards/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
