@@ -8,6 +8,21 @@ body {
     background-attachment: fixed;
 }
 
+ul {list-style: none;}
+
+li, .edit-title {
+    display: flex;
+    justify-content: center;
+    color: rgb(87, 87, 87);
+    margin: 5px 0;
+}
+
+li * {
+    margin: 0 0 0 10px;
+    color: #000;
+    text-align: center;
+}
+
 a {text-decoration: none;}
 
 .header {
@@ -19,6 +34,9 @@ a {text-decoration: none;}
     grid-template-rows: 50px;
     align-items: center; 
 }
+
+button {outline: none;}
+
 .header a {display: inline-block;}
 
 .h {
@@ -27,7 +45,9 @@ a {text-decoration: none;}
     text-shadow: 1px 1px 2px black;
 }
 
-#button, #create-visit {
+#button,
+#search,
+#create-visit {
     border: none;
     background-color: transparent;
     color: aqua;
@@ -35,32 +55,211 @@ a {text-decoration: none;}
     font-size: 20px;
 }
 
+#search {margin-right: 50px;}
+
 #button:hover {cursor: pointer;}
 
 #root {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    /* flex-direction: column; */
     /* width: 100px; */
     /* height: 100px; */
     /* background-color: black; */
 }
 
-.dashboard {
+.dashboard, #edit-form, #visit-form, #auth, #search-form{
     margin-top: 50px;
     background-color: rgb(145, 228, 228);
     border: 2px solid rgb(141, 141, 141);
     border-radius: 20px;
-    width: 972px;
+    width: 1010px;
     min-height: 100px;
     display: flex;
     flex-flow: row wrap;
+    align-items: flex-start;
+}
+
+#auth {
+    width: 500px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+
 }
 
 .card {
+    position: relative;
     background-color: #fff;
     border: 1px solid #00aeff;
     border-radius: 20px;
-    width: 160px;
-    height: 90px;
+    width: 200px;
+}
+.panel-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 300px;
+}
+
+.button-wrapper, .edit-button-wrapper, .create-button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content:space-around;
+    margin-bottom: 5px;
+}
+
+.card-title, .edit-title, #auth-title, .create-title, .search-title {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+    background-color: rgb(87, 87, 87);
+    border-radius: 20px 20px 0  0;
+}
+
+.card-content {
+    margin: 0;
+    padding: 0;
+}
+
+.card button, .edit-button, #auth button, .create-button-wrapper button, .edit-buttons, .search-button, #reload-dashboard {
+    border: 1px solid #00aeff;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: #58bae7;
+    outline: none;
+}
+
+.edit-buttons {width: 120px;}
+
+#auth button, .search-button {
+    width: 100px;
+}
+
+.card button:last-child {
+    position: absolute;
+    top: 4%;
+    right: 1%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-color: #00aeff;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+/* ========================================= */
+
+#edit-form, #visit-form {
+    position: fixed;
+    width: 500px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+#visit-form * {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#visit-form header {
+    margin-top: 0;
+}
+
+#edit-form input, #edit-form button, #edit-form label {
+    margin: 5px;
+}
+#edit-form label, #visit-form label, #search-form label {
+    color: rgb(87, 87, 87);
+}
+#edit-form {
+    position: absolute;
+    right: 32%;
+    top: 12%;
+}
+
+#search-form {
+    position:absolute;
+    top: 13%;
+    right: 40%;
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#search-form label {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.edit-button-wrapper , .create-buttons-wrapper {
+    /* width: 100%; */
+    display: flex;
+    justify-content: center;
+    /* margin: 5px; */
+}
+
+.edit-button-wrapper * {margin: 5px;}
+
+.edit-title, #auth-title, .create-title {
+    width: 100%;
+    margin-top: 0;
+}
+.search-title {width: 100%;}
+#auth {
+    height: 120px;
+    position: relative;
+    padding-top: 30px;
+}
+#auth-title, .create-title, .search-title {
+    position: absolute;
+    top: 0;
+}
+
+
+.empty {
+    display: block;
+    width: 100%;
+    color: rgb(87, 87, 87);
+    text-align: center;
+    font-size: 18px;
+}
+
+#visit-form {
+    padding-top: 30px;
+    padding-bottom: 15px;
+    min-height: 80px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.create-button-wrapper {
+    width: 200px;
+    margin: 5px;
+}
+
+#reload-dashboard {
+    margin-top: 20px;
+    width: 150px;
+    font-size: 20px;
 }

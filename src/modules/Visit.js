@@ -6,12 +6,8 @@ import ElementHandler from "./ElementHandler.js";
 
 export default class Visit extends Modal{
     constructor ({
-        position, id, type, name, placeHolder, required, 
-
+        position, id, type, name, placeHolder, required,
         visit,
-        // purpose, description, urgency, regularPressure, bodyMassIndex, heartDeseases,
-        //  lastVisit,
-        // age, fullName, visitOption, optionValue,
     }) {
         super({
             position: position,
@@ -24,17 +20,6 @@ export default class Visit extends Modal{
         this.id = id;
         this.position = position;
         this.visit = visit;
-        // this.purpose = purpose;
-        // this.description = description;
-        // this.urgency = urgency;
-        // this.regularPressure = regularPressure;
-        // this.bodyMassIndex = bodyMassIndex;
-        // this.heartDeseases = heartDeseases;
-        // this.lastVisit = lastVisit;
-        // this.age = age;
-        // this.fullName = fullName;
-        // this.visitOption = visitOption;
-        // this.optionValue = optionValue;
     }
 
     selectVisit () {
@@ -45,7 +30,8 @@ export default class Visit extends Modal{
         select.addElement();
         select.modify("name", "visit-form");
         config.element(this.id).append(label);
-
+        label.insertAdjacentHTML("beforebegin", `<header class="create-title">Створення візиту</header>`);
+        
         const option1 = new ElementHandler([], {element: "option", id: "visit-option-cardiologist", parentElement: config.element("select-visit")})
         option1.addElement();
         const eltOption1 = config.element("visit-option-cardiologist");
@@ -100,12 +86,12 @@ export default class Visit extends Modal{
         eltOption3.textContent = "Звичайна";
         eltOption3.nodeValue = "urg-low";
         eltOption3.removeAttribute("id");
-
     }
-
+    
     confirm () {
         const form = config.element("visit-form");
-        const submit = new ElementHandler([], {element: "button", id: "submit-visit", parentElement: form});
+        config.element("visit-form").insertAdjacentHTML("beforeend", `<div class="create-button-wrapper"></div>`);
+        const submit = new ElementHandler([], {element: "button", id: "submit-visit", parentElement: document.querySelector(".create-button-wrapper") });
         submit.addElement();
         config.element("submit-visit").setAttribute("type", "submit");
         config.element("submit-visit").textContent = "Створити";
@@ -113,8 +99,9 @@ export default class Visit extends Modal{
     
     cancel () {
         const form = config.element("visit-form");
-        const submit = new ElementHandler([], {element: "button", id: "cancel-visit", parentElement: form});
+        const submit = new ElementHandler([], {element: "button", id: "cancel-visit", parentElement: document.querySelector(".create-button-wrapper")});
         submit.addElement();
+        config.element("cancel-visit").setAttribute("type", "button");
         config.element("cancel-visit").textContent = "Закрити";   
     }
 

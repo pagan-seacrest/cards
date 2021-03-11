@@ -1,6 +1,8 @@
 import {config} from "./config.js";
 import Dashboard from "./Dashboard.js";
 
+const dasboard = new Dashboard({});
+
 export default class Client {
     constructor(body) {
         this.body = body;
@@ -13,7 +15,13 @@ export default class Client {
             "Authorization": `Bearer ${config.token()}`
         }
     });
-    return await request.json()
+    const res =  await request.json();
+    // const reload = new Dashboard({});
+    // config.element("search").remove();
+        // document.getElementById("dashboard").remove();
+        // reload.update();
+        // reload.create();
+        return res;
     }
 
     async card (id) {
@@ -26,9 +34,6 @@ export default class Client {
             }
         })
         const step =  await req.json();
-        const reload = new Dashboard({});
-        reload.update();
-        console.log("step1");
         return step;
     }
 
@@ -41,10 +46,13 @@ export default class Client {
             },
             body: JSON.stringify(this.body)
         });
-        return await req.json();
-        // console.log(JSON.stringify(res));
-        // console.log(JSON.stringify(res[0]["id"]));
-        // localStorage.setItem("id", JSON.stringify(res[0]["id"]));
+        const res = await req.json();
+        const reload = new Dashboard({});
+        document.getElementById("search").remove();
+        document.getElementById("dashboard").remove();
+        reload.update();
+        reload.create();
+        return res;
     }
 
     async put (id) {
@@ -56,15 +64,16 @@ export default class Client {
             },
             body: JSON.stringify(this.body)
         });
-        const step = await req.json();
+        const res = await req.json();
         const reload = new Dashboard({});
+        document.getElementById("search").remove();
         document.getElementById("dashboard").remove();
         reload.update();
-        return step;
+        reload.create();
+        return res;
     }
 
     async delete (id) {
-        // const req = await 
         return await fetch(`https://ajax.test-danit.com/api/cards/${id}`, {
             method: "DELETE",
             headers: {
@@ -72,6 +81,5 @@ export default class Client {
                 "Authorization": `Bearer ${config.token()}`
             },
         });
-        // return await req.json();
     }
 }
