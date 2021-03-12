@@ -30,7 +30,6 @@ export default class Dashboard {
         root.insertAdjacentHTML("afterbegin", `<div id="dashboard" class="dashboard"></div>`) : false;
         const client = new Client();
         client.get().then((res) => {
-            
             res.length !== 0 ? res.forEach((card) => {
                 localStorage.setItem(`${card.id}`, `${JSON.stringify(card)}`);
 

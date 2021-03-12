@@ -7,14 +7,14 @@ export default class Client {
         this.body = body;
     }
     async get () {
-        const request = await fetch("https://ajax.test-danit.com/api/cards", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${config.token()}`
-        }
-    });
-    return res =  await request.json();
+            const request = await fetch("https://ajax.test-danit.com/api/cards", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${config.token()}`
+                }
+            });
+            return await request.json();
     }
 
     async card (id) {
