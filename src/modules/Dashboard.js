@@ -215,10 +215,24 @@ export default class Dashboard {
                 this.cancel();
                 resolve();
             }
+
+            
         });
         });
+        
 
         changeVisit.then(() => {
+
+            const stay = setTimeout(() => {
+                document.body.addEventListener("click", close);
+                function close (event) {
+                    document.body.removeEventListener("click", close);
+                    if (event.target.parentElement === root || event.target.parentElement === document.body) {
+                        config.element("edit-form").remove();
+                    }
+                    clearTimeout(stay);
+                }
+            }, 0)
 
             config.element("edit-confirm").addEventListener("click", confirmEdit);
             
@@ -271,18 +285,17 @@ export default class Dashboard {
                 config.element(`${event.target.id}`).removeEventListener("click", deny);
                 config.element("edit-form").remove();
             }
-            this.create();
         }
     }
 
     create () {
         const visitDetails = {};
 
-        const promise = new Promise ((resolve) => {
-
-            loginOrCreate.addEventListener("click", createVisit)
-
-            function createVisit () {
+        loginOrCreate.addEventListener("click", createVisit)
+        
+        function createVisit () {
+                const promise = new Promise ((resolve) => {
+                    
                 loginOrCreate.removeEventListener("click", createVisit);
                 const visit  = new Visit({position: root, id: "visit-form"});
                 visit.selectVisit();
@@ -292,16 +305,17 @@ export default class Dashboard {
                 if (config.element("visit-form") !== null) {
                     document.body.addEventListener("click", deny);
                     function deny (event) {
-                        if (event.target.parentElement === document.getElementsByTagName("body")[0]
+                        if (event.target.parentElement === document.body
                         || event.target === root || event.target === config.element("dashboard")) {
                             document.body.removeEventListener("click", deny);
-                            config.element("visit-form").remove();
+                            config.element("visit-form") !== null ? config.element("visit-form").remove() : false;
                             loginOrCreate.addEventListener("click", createVisit);
                             clearTimeout(stay);
                         }
                     }
                 }
             }, 0)
+
 // =========================================
 
                 config.element("select-visit").addEventListener("click", () => {
@@ -320,27 +334,26 @@ export default class Dashboard {
                             return new VisitTherapist({position: root, id: "visit-form"}).additionalForm();
                         }
                 });
-            }
-        });
-        
-        promise.then(() => {
+            });
+            
+            promise.then(() => {
             visitDetails.urgency = config.element("visit-urgency").firstElementChild.value;
     
             config.element("visit-name").addEventListener("change", (ev) => visitDetails.name = ev.target.value);
             config.element("visit-purpose").addEventListener("change", (ev) => visitDetails.purpose = ev.target.value);
             config.element("visit-description").addEventListener("change",(ev)=> visitDetails.description = ev.target.value);
             config.element("visit-urgency").addEventListener("change", (ev) => visitDetails.urgency = ev.target[ev.target.selectedIndex].value);
-
+            
             if (visitDetails.doctor === "Кардіолог") {
                 config.element("age").addEventListener("change", (ev) => visitDetails.age = ev.target.value);
                 config.element("visit-pressure").addEventListener("change", (ev) => visitDetails.pressure = ev.target.value);
                 config.element("body-mass-index").addEventListener("change", (ev) => visitDetails.bodyMassIndex = ev.target.value);
                 config.element("heart-diseases").addEventListener("change", (ev) => visitDetails.heartDiseases = ev.target.value);
             }
-
+            
             visitDetails.doctor === "Дантист" ?
             config.element("last-visit-date").addEventListener("change", (ev) => visitDetails.lastVisitDate = ev.target.value) : false;
-
+            
             visitDetails.doctor === "Терапевт" ?
             config.element("age").addEventListener("change", (ev) => visitDetails.age = ev.target.value) : false;
     
@@ -352,9 +365,10 @@ export default class Dashboard {
                 if (event.target.id === "cancel-visit" || event.target.parentElement === document.body
                 || event.target === root || event.target === config.element("dashboard")) {
                     document.body.removeEventListener("click", deny);
-                    config.element("cancel-visit").removeEventListener("click", deny);
-                    config.element("submit-visit").removeEventListener("click", postReq);
-                    config.element("visit-form").remove();
+                    config.element("cancel-visit") !== null ? config.element("cancel-visit").removeEventListener("click", deny) : false;
+                    config.element("submit-visit") !== null ? config.element("submit-visit").removeEventListener("click", postReq): false;
+                    config.element("visit-form") !== null ? config.element("visit-form").remove() : false;
+                    loginOrCreate.addEventListener("click", createVisit);
                 }
             }
             
@@ -378,6 +392,7 @@ export default class Dashboard {
             }
         });
     }
+}
 
     search () {
         const filter = {}
