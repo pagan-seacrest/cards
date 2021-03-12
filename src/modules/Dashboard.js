@@ -300,7 +300,7 @@ export default class Dashboard {
                 const visit  = new Visit({position: root, id: "visit-form"});
                 visit.selectVisit();
                 config.element("visit-form").classList.add("new-visit-form");
-// =========================================
+                
             const stay = setTimeout(() => {
                 if (config.element("visit-form") !== null) {
                     document.body.addEventListener("click", deny);
@@ -315,8 +315,6 @@ export default class Dashboard {
                     }
                 }
             }, 0)
-
-// =========================================
 
                 config.element("select-visit").addEventListener("click", () => {
                     let num = config.element("select-visit").selectedIndex;

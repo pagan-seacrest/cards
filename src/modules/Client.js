@@ -1,7 +1,6 @@
 import {config} from "./config.js";
 import Dashboard from "./Dashboard.js";
 
-const dasboard = new Dashboard({});
 
 export default class Client {
     constructor(body) {
@@ -15,13 +14,7 @@ export default class Client {
             "Authorization": `Bearer ${config.token()}`
         }
     });
-    const res =  await request.json();
-    // const reload = new Dashboard({});
-    // config.element("search").remove();
-        // document.getElementById("dashboard").remove();
-        // reload.update();
-        // reload.create();
-        return res;
+    return res =  await request.json();
     }
 
     async card (id) {
