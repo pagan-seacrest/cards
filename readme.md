@@ -1,3 +1,3 @@
 #Step Project CARDS
 
-student - Valery Shvets FE24, nickname PaganSeacrest
+student - Valery Shvets FE24
