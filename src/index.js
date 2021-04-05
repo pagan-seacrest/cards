@@ -1,20 +1,37 @@
-import { root, data, config } from "./modules/config.js";
-// import Client from "./modules/Client.js"
-// import login  from "./modules/login.js";
+import { root, button, data, prepare, changeButtonsValue, config } from "./modules/config.js";
+import Auth from "./modules/Auth.js";
+import Client from "./modules/Client.js";
+import Modal from "./modules/Modal.js";
+import {Form} from "./modules/components.js";
+
+const client = new Client({});
+const auth = new Auth()
+onload = (config.token() ?? prepare());
+// const logger = client.login();
+// logger.then(res => console.log(res))
+
 // import Dashboard from "./modules/Dashboard.js";
-// import Auth from "./modules/Auth.js";
 
 // import Visit from "./modules/Visit.js";
-import Visit from "./test/Visit.js"; // TEST
 
 
+// onchange = (config.token()?? changeButtonsValue());
 
-const visit  = new Visit()
+
+// =========================================
+// const form = new Form(root, "test-form");
+// const elt = new Modal({position: root, id: "bbb", title: "bottle"});
+// elt.input({id: "test-id", type: "text", placeholder: "test placeHolder"});
+// elt.selectDoctor("select-test-doctor");
+// elt.selectUrgency("select-test-urgency");
+// elt.textArea("test-textarea");
+// config.submitVisit.position = elt.wrap("test-class");
+// elt.button(config.submitVisit);
+// elt.button("test-button")
+// =========================================
 
 // const dashboard = new Dashboard({});
 
-// config.token() ? config.content(loginOrCreate, "Створити візит") : false;
-// onchange = (config.token() !== null ? config.loginToggle(true): false);
 
 // onload = (config.token() !== null || config.element("button").textContent === "Створити візит" ?
 // () => {

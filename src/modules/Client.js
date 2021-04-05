@@ -1,5 +1,5 @@
-import {config} from "./config.js";
-import Dashboard from "./Dashboard.js";
+import {data, config} from "./config.js";
+// import Dashboard from "./Dashboard.js";
 
 
 export default class Client {
@@ -7,7 +7,14 @@ export default class Client {
         this.body = body;
     }
 
-    
+    login () {
+    return  fetch(`${data.url}login`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(data.account)
+      }).then(res => res.text())
+    }
+
     async get () {
             const request = await fetch("https://ajax.test-danit.com/api/cards", {
                 method: "GET",
@@ -31,7 +38,7 @@ export default class Client {
         const step =  await req.json();
         return step;
     }
-
+/*
     async post () {
         const req = await fetch("https://ajax.test-danit.com/api/cards", {
             method: "POST",
@@ -67,7 +74,7 @@ export default class Client {
         reload.create();
         return res;
     }
-
+*/
     async delete (id) {
         return await fetch(`https://ajax.test-danit.com/api/cards/${id}`, {
             method: "DELETE",

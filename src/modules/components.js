@@ -2,21 +2,29 @@ class Form {
     constructor (position, id) {
         this.id = id;
         this.position = position;
-        return this.createForm();
+        return this.addForm();
+    }
+
+    addForm () {
+      this.position.insertAdjacentHTML("beforeend", `
+      <form id="${this.id}"></form>`);
+
+        return document.getElementById(this.id);
     }
 
     createForm () {
-        const form = document.createElement("form");
-        form.id = this.id
-        this.position.append(form);
-        return form;
+      const form = document.createElement("form");
+      form.id = this.id
+      this.position.append(form);
+
+      return form;
     }
 }
 
 class Input {
-    constructor ({position, type, name, className, placeHolder, id}) {
+    constructor ({position, type, name, className, placeholder, id}) {
         this.type = type;
-        this.placeHolder = placeHolder;
+        this.placeHolder = placeholder;
         this.id = id;
         this.name = name;
         this.position = position;
@@ -25,41 +33,49 @@ class Input {
 
     addInput (position = this.position, id = this.id) {
         position.insertAdjacentHTML("beforeend", `
-        <input type="${this.type}" 
-        class="${this.className ?? false}" 
-        id="${this.id}" name="${this.name ?? false}" 
-        placeholder="${this.placeHolder ?? false}" required>`);
+        <input type="${this.type}"
+        class="${this.className}"
+        id="${this.id}" name="${this.name}"
+        placeholder="${this.placeHolder}" required>`);
 
         return document.getElementById(`${id}`);
     }
+  }
 
-    addUrgencyrSelect (position = this.position, id = this.id) {
-        position.insertAdjacentHTML("beforeend", `
-        <label for="${id}">
-            <select id="${id}">Терміновість 
-                <option>Невідкладна</option>
-                <option>Важлива</option>
-                <option>Звичайна</option>
-            </select>
-        </label>`);
+class Select {
+  constructor ({id, position, forForm}) {
+    this.id = id;
+    this.labelFor = forForm;
+    this.position = position;
+  }
 
-        return document.getElementById(`${id}`)
-    }
+  addUrgencyrSelect (position = this.position, id = this.id, labelFor = this.labelFor) {
+      position.insertAdjacentHTML("beforeend", `
+      <label for="${labelFor}">Терміновість
+          <select id="${id}">
+              <option>Невідкладна</option>
+              <option>Важлива</option>
+              <option>Звичайна</option>
+          </select>
+      </label>`);
 
-    addDoctorSelect (position = this.position, id = this.id) {
-        position.insertAdjacentHTML("beforeend", `
-        <label for="${id}">
-            <select id="${id}">Виберіть лікаря  
-                <option>Кардіолог</option>
-                <option>Дантист</option>
-                <option>Терапевт</option>
-            </select>
-        </label>`);
+      return document.getElementById(`${id}`)
+  }
 
-        return document.getElementById(`${id}`)
-    }
+  addDoctorSelect (position = this.position, id = this.id, labelFor = this.labelFor) {
+      position.insertAdjacentHTML("beforeend", `
+      <label for="${labelFor}">Виберіть лікаря
+          <select id="${id}">
+              <option>Кардіолог</option>
+              <option>Дантист</option>
+              <option>Терапевт</option>
+          </select>
+      </label>`);
 
-    listen (elt = document.getElementById(`${this.id}`)) {
+      return document.getElementById(`${id}`)
+  }
+
+    listen (elt) {
         elt.addEventListener("blur", ev);
         return function ev (event) {
             return event.target.value
@@ -67,34 +83,48 @@ class Input {
     }
 }
 
+class TextArea {
+  constructor ({id, position}) {
+    this.id = id;
+    this.position = position;
+  }
+
+  addTextArea (id = this.id, position = this.position) {
+    position.insertAdjacentHTML("beforeend", `
+    <textarea rows="6" cols="40" placeholder="Опис візиту"></textarea>`);
+  }
+}
+
 class Button {
-    constructor({type, content, id, className, position}) {
+    constructor({type, value, id, className, position}) {
         this.type = type;
-        this.content = content,
+        this.value = value,
         this.id = id;
         this.className = className;
         this.position = position;
+
+        return this.add();
     }
-    
-    add (position = this.position) {
-        position.insertAdjacentHTML("beforeend", `
-        <button type="${this.type} id="${this.id}" class="${this.className ?? false}">${this.content}</button>`);
+
+    add () {
+        this.position.insertAdjacentHTML("beforeend", `
+        <button type="${this.type} id="${this.id}" class="${this.className}">${this.value}</button>`);
 
         return document.getElementById(`${this.id}`)
     }
 
-    on (ev) {
-        document.getElementById(`${this.id}`).addEventListener(click, ev)
+    enableClick (ev) {
+        document.getElementById(`${this.id}`).addEventListener("click", ev)
 
         return ev;
     }
 
-    off () {
-        document.getElementById(`${this.id}`).removeEventListener(click, ev)
+    disableClick (ev) {
+        document.getElementById(`${this.id}`).removeEventListener("click", ev)
 
         return ev;
     }
-}
+  }
 
 
-export {Form, Input, Button};
+export {Form, Input, Select, TextArea, Button};

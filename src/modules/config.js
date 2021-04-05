@@ -1,19 +1,48 @@
-
+import Client from "./Client.js";
+const client = new Client({});
 
 const root = document.getElementById("root");
+const button = document.getElementById("button");
+
 
 const data = {
     account: {
         "email": "velocity@fex.net",
         "password": "velocity"
-    }
+    },
+    url: "https://ajax.test-danit.com/api/v2/cards/",
 }
-const form = getElementById("visit-form");
+
+function changeButtonsValue () {
+  button.textContent = "Вхід" ? button.textContent = "Створити візит" : button.textContent = "Вхід";
+}
+
+function prepare () {
+  try {
+    const thread = new Promise((resolve, reject) => {
+      client.login().then(res => resolve(localStorage.setItem("token", res)));
+    });
+    thread.then(() => changeButtonsValue());
+    thread.catch(err => console.log(`${err} \n >>> Promise "thread" error: login failure `));
+  } catch (err) {
+    throw new Error(err);
+  }
+}
 
 const config = {
+  newVisitModal: {
+    position: document.getElementById("root"),
+    id: "visit-form",
+    title: "Створення візиту",
+  },
+  submitVisit: {
+    type: "submit",
+    id: "submit-visit",
+    value: "Створити візит"
+  },
     visitCommonValues: {
         name: {
-            position: form,
+            // position: form,
             type: "text",
             placeHolder: "ПІБ",
             id: "visit-name",
@@ -21,7 +50,7 @@ const config = {
             name: null
         },
         purpose: {
-            position: form,
+            // position: form,
             type: "text",
             placeHolder: "Мета вашого візиту",
             id: "visit-purpose",
@@ -29,7 +58,7 @@ const config = {
             name: null
         },
         description: {
-            position: form,
+            // position: form,
             type: "text",
             placeHolder: "Короткий опис візиту",
             id: "visit-description",
@@ -37,13 +66,13 @@ const config = {
             name: null
         },
         urgency: {
-            position: form,
+            // position: form,
             id: "visit-urgency"
         }
     },
     visitCardiologist: {
         presssure: {
-            position: form,
+            // position: form,
             type: "text",
             placeHolder: "Тиск зазвичай",
             id: "visit-pressure",
@@ -51,7 +80,7 @@ const config = {
             name: null
         },
         bodyMassIndex: {
-            position: form,
+            // position: form,
             type: "number",
             placeHolder: "Індекс маси тіла",
             id: "visit-date",
@@ -59,7 +88,7 @@ const config = {
             name: null
         },
         age: {
-            position: form,
+            // position: form,
             type: "number",
             placeHolder: "Вік",
             id: "visit-age",
@@ -68,14 +97,14 @@ const config = {
         }
     },
     visitDentist: {
-        position: form,
+        // position: form,
         type: "number",
         placeHolder: null,
         id: "visit-date",
         className: null
     },
     visitTherapist: {
-        position: form,
+        // position: form,
         type: "number",
         placeHolder: "Вік",
         id: "visit-age",
@@ -89,9 +118,10 @@ const config = {
         return div;
     },
     token() { return localStorage.getItem("token") },
-    
+
     element (id) {return document.getElementById(id); },
 }
 
+// localStorage.getItem("token") ?? config.changeButtonsValue();
 
-export {root, data, config}
+export {root, button, data, prepare, changeButtonsValue, config}

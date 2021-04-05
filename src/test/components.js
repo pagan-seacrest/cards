@@ -25,9 +25,9 @@ class Input {
 
     addInput (position = this.position, id = this.id) {
         position.insertAdjacentHTML("beforeend", `
-        <input type="${this.type}" 
-        class="${this.className ?? false}" 
-        id="${this.id}" name="${this.name ?? false}" 
+        <input type="${this.type}"
+        class="${this.className ?? false}"
+        id="${this.id}" name="${this.name ?? false}"
         placeholder="${this.placeHolder ?? false}" required>`);
 
         return document.getElementById(`${id}`);
@@ -36,7 +36,7 @@ class Input {
     addUrgencyrSelect (position = this.position, id = this.id) {
         position.insertAdjacentHTML("beforeend", `
         <label for="${id}">
-            <select id="${id}">Терміновість 
+            <select id="${id}">Терміновість
                 <option>Невідкладна</option>
                 <option>Важлива</option>
                 <option>Звичайна</option>
@@ -49,7 +49,7 @@ class Input {
     addDoctorSelect (position = this.position, id = this.id) {
         position.insertAdjacentHTML("beforeend", `
         <label for="${id}">
-            <select id="${id}">Виберіть лікаря  
+            <select id="${id}">Виберіть лікаря
                 <option>Кардіолог</option>
                 <option>Дантист</option>
                 <option>Терапевт</option>
@@ -75,10 +75,9 @@ class Button {
         this.className = className;
         this.position = position;
     }
-    
+
     add (position = this.position) {
-        position.insertAdjacentHTML("beforeend", `
-        <button type="${this.type} id="${this.id}" class="${this.className ?? false}">${this.content}</button>`);
+        position.insertAdjacentHTML("beforeend", `<button type="${this.type} id="${this.id}" class="${this.className ?? false}">${this.content}</button>`);
 
         return document.getElementById(`${this.id}`)
     }

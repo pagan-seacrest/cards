@@ -32,7 +32,7 @@ a {text-decoration: none;}
     display: grid;
     grid-template-columns: 1fr 8fr 1fr;
     grid-template-rows: 50px;
-    align-items: center; 
+    align-items: center;
 }
 
 button {outline: none;}
@@ -104,6 +104,7 @@ button {outline: none;}
     justify-content: flex-end;
     width: 300px;
 }
+#button {margin-right: 20px}
 
 .button-wrapper, .edit-button-wrapper, .create-button-wrapper {
     width: 100%;
