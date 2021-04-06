@@ -47,6 +47,7 @@ class Select {
     this.id = id;
     this.labelFor = forForm;
     this.position = position;
+    return document.getElementById(this.id); // if default id into methods
   }
 
   addUrgencyrSelect (position = this.position, id = this.id, labelFor = this.labelFor) {
@@ -75,12 +76,6 @@ class Select {
       return document.getElementById(`${id}`)
   }
 
-    listen (elt) {
-        elt.addEventListener("blur", ev);
-        return function ev (event) {
-            return event.target.value
-        }
-    }
 }
 
 class TextArea {

@@ -1,9 +1,6 @@
-import Client from "./Client.js";
-const client = new Client({});
-
 const root = document.getElementById("root");
-const button = document.getElementById("button");
 
+const button = document.getElementById("button");
 
 const data = {
     account: {
@@ -15,18 +12,6 @@ const data = {
 
 function changeButtonsValue () {
   button.textContent = "Вхід" ? button.textContent = "Створити візит" : button.textContent = "Вхід";
-}
-
-function prepare () {
-  try {
-    const thread = new Promise((resolve, reject) => {
-      client.login().then(res => resolve(localStorage.setItem("token", res)));
-    });
-    thread.then(() => changeButtonsValue());
-    thread.catch(err => console.log(`${err} \n >>> Promise "thread" error: login failure `));
-  } catch (err) {
-    throw new Error(err);
-  }
 }
 
 const config = {
@@ -122,6 +107,4 @@ const config = {
     element (id) {return document.getElementById(id); },
 }
 
-// localStorage.getItem("token") ?? config.changeButtonsValue();
-
-export {root, button, data, prepare, changeButtonsValue, config}
+export {root, button, data, changeButtonsValue, config}

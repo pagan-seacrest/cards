@@ -1,10 +1,22 @@
-import {data, config} from "./config.js";
-// import Dashboard from "./Dashboard.js";
+import {data, changeButtonsValue, config} from "./config.js";
+import Auth from "./Auth.js";
 
-
-export default class Client {
+export default class Client extends Auth {
     constructor(body) {
+      super();
         this.body = body;
+    }
+
+    setUp () {
+      try {
+        const thread = new Promise((resolve, reject) => {
+          this.login().then(res => resolve(localStorage.setItem("token", res)));
+        });
+        thread.then(() => changeButtonsValue());
+        thread.catch(err => console.log(`${err} \n >>> Promise "thread" error: login failure `));
+      } catch (err) {
+        throw new Error(err);
+      }
     }
 
     login () {

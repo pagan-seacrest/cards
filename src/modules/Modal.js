@@ -12,7 +12,7 @@ export default class Modal {
           <header class="${className}">${title}</header>`);
         }
         this.title();
-
+        
     }
 
     wrap (className) {
@@ -34,8 +34,8 @@ export default class Modal {
       }).addInput();
     }
 
-    selectDoctor (id, position = this.form) {
-      return new Select ({id: id, position: position, forForm: this.form.id}).addDoctorSelect();
+    selectDoctor (id, position = this.form, labelFor = this.form.id) {
+      return new Select ({id: id, position: position, forForm: labelFor}).addDoctorSelect();
     }
 
     selectUrgency (id, position = this.form) {
