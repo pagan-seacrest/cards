@@ -8,11 +8,9 @@ export default class Modal {
         this.form = new Form(this.position, this.id)
         config.submitVisit.position = this.form;
         this.title = function() {
-          this.form.insertAdjacentHTML("beforeend", `
-          <header class="${className}">${title}</header>`);
+          this.form.insertAdjacentHTML("beforeend", `<header class="${className}">${title}</header>`);
         }
         this.title();
-        
     }
 
     wrap (className) {

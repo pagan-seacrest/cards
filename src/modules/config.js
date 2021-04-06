@@ -15,6 +15,18 @@ function changeButtonsValue () {
 }
 
 const config = {
+  buttonLogIn: {
+    position: root,
+    id: "auth-button-confirm",
+    className: "send",
+    value: "Вхід"
+  },
+  buttonCancel: {
+    position: root,
+    id: "auth-button-cancel",
+    className: "cancel",
+    value: "Відмінити"
+  },
   newVisitModal: {
     position: document.getElementById("root"),
     id: "visit-form",

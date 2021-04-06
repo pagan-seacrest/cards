@@ -1,18 +1,18 @@
 import { root, button, data, changeButtonsValue, config } from "./modules/config.js";
 // import Dashboard from "./modules/Dashboard.js";
-import Auth from "./modules/Auth.js";
 import Client from "./modules/Client.js";
 import Modal from "./modules/Modal.js";
-import {Form} from "./modules/components.js";
+import { Form } from "./modules/components.js";
 import Visit from "./modules/Visit.js";
 
 const client = new Client({});
 onload = (config.token() ?? client.setUp());
+client.auth();
 // onchange = (config.token()?? changeButtonsValue());
 
 
 console.log(config.submitVisit.position);
-const visit = new Visit({});
+// const visit = new Visit({});
 console.log(config.submitVisit.position);
 
 

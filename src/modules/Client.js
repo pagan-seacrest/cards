@@ -1,10 +1,21 @@
 import {data, changeButtonsValue, config} from "./config.js";
-import Auth from "./Auth.js";
+import Modal from "./Modal.js";
 
-export default class Client extends Auth {
+export default class Client {
     constructor(body) {
-      super();
-        this.body = body;
+      config.token() ? button.textContent = "Створити візит" : false;
+      this.body = body;
+    }
+
+    auth () {
+      const form = new Modal({position: root, id: "auth-form", title: "Авторизація", className: "modal-title"});
+      form.input({id: "auth-email", type: "text", placeholder: "Пошта"});
+      form.input({id: "auth-password", type: "password", placeholder: "Пароль"});
+      const div = form.wrap("button-wrapper");
+      config.buttonLogIn.position = div;
+      config.buttonCancel.position = div;
+      form.button(config.buttonLogIn);
+      form.button(config.buttonCancel);
     }
 
     setUp () {
