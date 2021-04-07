@@ -10,7 +10,7 @@ body {
 
 ul {list-style: none;}
 
-li, .edit-title, .modal-title {
+li {
     display: flex;
     justify-content: center;
     color: rgb(87, 87, 87);
@@ -35,7 +35,10 @@ a {text-decoration: none;}
     align-items: center;
 }
 
-button {outline: none;}
+button {
+  outline: none;
+  cursor: pointer;
+}
 
 .header a {display: inline-block;}
 
@@ -43,6 +46,11 @@ button {outline: none;}
     margin: 0;
     color: aqua;
     text-shadow: 1px 1px 2px black;
+}
+input {
+  border-radius: 8px;
+  outline: none;
+  border: none;
 }
 
 #button,
@@ -70,16 +78,46 @@ button {outline: none;}
     /* background-color: black; */
 }
 
-.dashboard, #edit-form, #visit-form, #auth, #search-form{
-    margin-top: 50px;
+.modal{
+    margin-top: 120px;
     background-color: rgb(145, 228, 228);
     border: 2px solid rgb(141, 141, 141);
     border-radius: 20px;
-    width: 1010px;
-    min-height: 100px;
+    width: 500px;
+    min-height: 150px;
     display: flex;
-    flex-flow: row wrap;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+.modal-title {
+  width: 100%;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  background-color: rgb(87, 87, 87);
+  border-radius: 20px 20px 0  0;
+}
+
+.button-wrapper{
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+.button-wrapper button {
+  border: 1px solid #00aeff;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #58bae7;
+  width: 100px;
+}
+
+#auth-form {
+  width: 500px;
+  height: 150px;
 }
 
 #auth {
@@ -106,42 +144,35 @@ button {outline: none;}
 }
 #button {margin-right: 20px}
 
-.button-wrapper, .edit-button-wrapper, .create-button-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content:space-around;
-    margin-bottom: 5px;
-}
-
-.card-title, .edit-title, #auth-title, .create-title, .search-title, .modal-title {
+/* .card-title, .edit-title, #auth-title, .create-title, .search-title, .modal-title {
     display: flex;
     justify-content: center;
     font-size: 18px;
     color: #fff;
     background-color: rgb(87, 87, 87);
     border-radius: 20px 20px 0  0;
-}
+} */
 
-.card-content {
+/* .card-content {
     margin: 0;
     padding: 0;
-}
+} */
 
-.card button, .edit-button, #auth button, .create-button-wrapper button, .edit-buttons, .search-button, #reload-dashboard {
+/* .card button, .edit-button, #auth button, .create-button-wrapper button, .edit-buttons, .search-button, #reload-dashboard {
     border: 1px solid #00aeff;
     border-radius: 10px;
     font-size: 14px;
     background-color: #58bae7;
     outline: none;
-}
+} */
 
-.edit-buttons {width: 120px;}
+/* .edit-buttons {width: 120px;}
 
 #auth button, .search-button {
     width: 100px;
-}
+} */
 
-.card button:last-child {
+/* .card button:last-child {
     position: absolute;
     top: 4%;
     right: 1%;
@@ -152,15 +183,13 @@ button {outline: none;}
     align-items: center;
     background-color: #fff;
     border-color: #00aeff;
-}
+} */
 
-button:hover {
-    cursor: pointer;
-}
+
 
 /* ========================================= */
 
-#edit-form, #visit-form {
+/* #edit-form, #visit-form {
     position: fixed;
     width: 500px;
     min-height: 100px;
@@ -169,13 +198,13 @@ button:hover {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-}
+} */
 
-#visit-form * {
+/* #visit-form * {
     margin-top: 5px;
     margin-bottom: 5px;
-}
-
+} */
+/*
 #visit-form header {
     margin-top: 0;
 }
@@ -210,32 +239,27 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 
 
-.edit-button-wrapper , .create-buttons-wrapper {
-    /* width: 100%; */
+/* .edit-button-wrapper , .create-buttons-wrapper {
+    width: 100%;
     display: flex;
     justify-content: center;
-    /* margin: 5px; */
-}
+    margin: 5px;
+}*/
 
-.edit-button-wrapper * {margin: 5px;}
+/* .edit-button-wrapper * {margin: 5px;} */
 
-.edit-title, #auth-title, .create-title , .modal-title{
-    width: 100%;
-    margin-top: 0;
-}
-.search-title {width: 100%;}
-#auth {
+/* #auth {
     height: 120px;
     position: relative;
     padding-top: 30px;
-}
-#auth-title, .create-title, .search-title, .modal-title{
+} */
+/* #auth-title, .create-title, .search-title, .modal-title{
     position: absolute;
     top: 0;
-}
+} */
 
 
 .empty {
@@ -246,21 +270,21 @@ button:hover {
     font-size: 18px;
 }
 
-#visit-form {
+/* #visit-form {
     padding-top: 30px;
     padding-bottom: 15px;
     min-height: 80px;
     display: flex;
     justify-content: space-around;
-}
+} */
 
-.create-button-wrapper {
+/* .create-button-wrapper {
     width: 200px;
     margin: 5px;
-}
+} */
 
-#reload-dashboard {
+/* #reload-dashboard {
     margin-top: 20px;
     width: 150px;
     font-size: 20px;
-}
+} */

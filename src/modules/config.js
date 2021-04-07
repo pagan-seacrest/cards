@@ -16,12 +16,15 @@ function changeButtonsValue () {
 
 const config = {
   buttonLogIn: {
+    type: "submit",
     position: root,
     id: "auth-button-confirm",
     className: "send",
-    value: "Вхід"
+    value: "Вхід",
+    event: null
   },
   buttonCancel: {
+    type: "button",
     position: root,
     id: "auth-button-cancel",
     className: "cancel",

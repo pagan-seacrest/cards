@@ -7,7 +7,7 @@ class Form {
 
     addForm () {
       this.position.insertAdjacentHTML("beforeend", `
-      <form id="${this.id}"></form>`);
+      <form id="${this.id}" class="form modal"></form>`);
 
         return document.getElementById(this.id);
     }
@@ -91,33 +91,34 @@ class TextArea {
 }
 
 class Button {
-    constructor({type, value, id, className, position}) {
+    constructor({type, value, id, className, position, event}) {
         this.type = type;
-        this.value = value,
+        this.value = value;
         this.id = id;
         this.className = className;
         this.position = position;
+        const click = this.add();
+        this.eventType = "click";
+        this.type === "submit" ? this.eventType = "submit" : false;
+        click.addEventListener(this.eventType, this.enableClick);
 
-        return this.add();
+        return click;
     }
 
     add () {
         this.position.insertAdjacentHTML("beforeend", `
-        <button type="${this.type} id="${this.id}" class="${this.className}">${this.value}</button>`);
+        <button type="${this.type}" id="${this.id}" class="${this.className}">${this.value}</button>`);
 
-        return document.getElementById(`${this.id}`)
+        return document.getElementById(this.id)
     }
 
-    enableClick (ev) {
-        document.getElementById(`${this.id}`).addEventListener("click", ev)
-
-        return ev;
+    enableClick (event) {
+      event.preventDefault();
+      event.target.parentElement.parentElement.remove();
     }
 
-    disableClick (ev) {
-        document.getElementById(`${this.id}`).removeEventListener("click", ev)
+    disableClick (event) {
 
-        return ev;
     }
   }
 

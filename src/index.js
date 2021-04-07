@@ -11,9 +11,7 @@ client.auth();
 // onchange = (config.token()?? changeButtonsValue());
 
 
-console.log(config.submitVisit.position);
 // const visit = new Visit({});
-console.log(config.submitVisit.position);
 
 
 
