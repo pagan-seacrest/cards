@@ -1,5 +1,6 @@
 import { root, button, data, changeButtonsValue, config } from "./config.js";
 import { Form, Input, Select, TextArea, Button} from "./components.js";
+import Dashboard from "./Dashboard.js";
 import Modal from "./Modal.js";
 
 export default class Visit extends Modal{
@@ -17,11 +18,16 @@ export default class Visit extends Modal{
     }
 
     listen (event) {
-      
-      const label = this.form.lastElementChild;
-      const select = this.form.lastElementChild.firstElementChild;
-      const [...options] =  select.children;
-      options.forEach((opt, i) => opt.id = "doctor-option" + i);
+      event.target.parentElement.nextElementSibling.remove();
+      config.visitValues.position = this.form;
+
+      if (event.target.value === null || event.target.value === undefined || event.target.value === "Кардіолог") {
+        new Dashboard(config.visitValues).cardiologist();
+      } else if (event.target.value === "Дантист") {
+        new Dashboard(config.visitValues).dentist();
+      } else if (event.target.value === "Терапевт") {
+        new Dashboard(config.visitValues).therapist();
+      }
     }
 
     visitForm () {

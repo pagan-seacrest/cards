@@ -5,7 +5,72 @@
 // import VisitDentist from "./VisitDentist.js";
 // import VisitTherapist from "./VisitTherapist.js";
 // import login from "./login.js";
-//
+import {Input, Select, TextArea, Button} from "./components.js";
+
+export default class Dashboard {
+  constructor (values) {
+    this.values = values;
+    this.values.name.position = this.values.position;
+    this.values.purpose.position = this.values.position;
+    this.values.description.position = this.values.position;
+    this.values.urgency.position = this.values.position;
+    this.values.urgency.forForm = this.values.position.id;
+    this.values.cardiologist.pressure.position = this.values.position;
+    this.values.cardiologist.bodyMassIndex.position = this.values.position;
+    this.values.cardiologist.age.position = this.values.position;
+    this.values.dentist.lastVisitDate.position = this.values.position;
+    this.values.therapist.age.position = this.values.position;
+  }
+
+  name () {
+    return new Input(this.values.name).addInput();
+  }
+
+  purpose () {
+    return new Input(this.values.purpose).addInput();
+  }
+
+  description () {
+    return new TextArea(this.values.description).addTextArea();
+  }
+
+  urgency () {
+    return new Select(this.values.urgency).addUrgencySelect();
+  }
+
+  cardiologist () {
+    this.name();
+    this.purpose();
+    this.description();
+    this.urgency();
+
+    new Input(this.values.cardiologist.pressure).addInput();
+    new Input(this.values.cardiologist.bodyMassIndex).addInput();
+    new Input(this.values.cardiologist.age).addInput();
+  }
+
+  dentist () {
+    this.name();
+    this.purpose();
+    this.description();
+    this.urgency();
+
+    new Input(this.values.dentist.lastVisitDate).addInput();
+  }
+
+  therapist () {
+    this.name();
+    this.purpose();
+    this.description();
+    this.urgency();
+
+    new Input(this.values.therapist.age).addInput();
+  }
+
+
+
+
+}
 //
 // export default class Dashboard {
 //     constructor ({id, doctor, name, urgency, purpose, description, pressure, heartDiseases, bodyMassIndex, lastVisitDate, age}) {

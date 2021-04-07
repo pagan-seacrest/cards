@@ -39,76 +39,83 @@ const config = {
     id: "submit-visit",
     value: "Створити візит"
   },
-    visitCommonValues: {
+    visitValues: {
+      position: root,
         name: {
-            // position: form,
+            position: root,
             type: "text",
-            placeHolder: "ПІБ",
-            id: "visit-name",
-            className: null,
-            name: null
+            placeholder: "ПІБ",
+            id: "visit-form-name",
+            className: undefined,
+            name: undefined
         },
         purpose: {
-            // position: form,
+            position: root,
             type: "text",
-            placeHolder: "Мета вашого візиту",
-            id: "visit-purpose",
-            className: null,
-            name: null
+            placeholder: "Мета вашого візиту",
+            id: "visit-form-purpose",
+            className: undefined,
+            name: undefined
         },
         description: {
-            // position: form,
+            position: root,
             type: "text",
-            placeHolder: "Короткий опис візиту",
-            id: "visit-description",
-            className: null,
-            name: null
+            placeholder: "Короткий опис візиту",
+            id: "visit-form-description",
+            className: undefined,
+            name: undefined
         },
         urgency: {
-            // position: form,
-            id: "visit-urgency"
+            position: root,
+            id: "visit-form-urgency",
+            forForm: undefined,
+        },
+        cardiologist: {
+          pressure: {
+              position: root,
+              type: "text",
+              placeholder: "Тиск зазвичай",
+              id: "visit-form-pressure",
+              className: undefined,
+              name: undefined
+          },
+          bodyMassIndex: {
+              position: root,
+              type: "number",
+              placeholder: "Індекс маси тіла",
+              id: "visit-form-date",
+              className: undefined,
+              name: undefined
+          },
+          age: {
+              position: root,
+              type: "number",
+              placeholder: "Вік",
+              id: "visit-form-age",
+              className: undefined,
+              name: undefined
+          }
+      },
+      dentist: {
+        lastVisitDate: {
+          position: root,
+          type: "date",
+          placeholder: undefined,
+          id: "visit-form-date",
+          className: undefined
         }
-    },
-    visitCardiologist: {
-        presssure: {
-            // position: form,
-            type: "text",
-            placeHolder: "Тиск зазвичай",
-            id: "visit-pressure",
-            className: null,
-            name: null
-        },
-        bodyMassIndex: {
-            // position: form,
-            type: "number",
-            placeHolder: "Індекс маси тіла",
-            id: "visit-date",
-            className: null,
-            name: null
-        },
+      },
+      therapist: {
         age: {
-            // position: form,
-            type: "number",
-            placeHolder: "Вік",
-            id: "visit-age",
-            className: null,
-            name: null
+          position: root,
+          type: "number",
+          placeholder: "Вік",
+          id: "visit-form-age",
+          className: undefined
         }
+      },
     },
-    visitDentist: {
-        // position: form,
-        type: "number",
-        placeHolder: null,
-        id: "visit-date",
-        className: null
-    },
-    visitTherapist: {
-        // position: form,
-        type: "number",
-        placeHolder: "Вік",
-        id: "visit-age",
-        className: null
-    },
+
     buttonWrapper (position, className) {
         const div = document.createElement("div");
         div.className = `${className}`;
@@ -121,4 +128,34 @@ const config = {
     element (id) {return document.getElementById(id); },
 }
 
-export {root, button, data, changeButtonsValue, config}
+const ajax = {
+  cardiologist: {
+    doctor: "Кардіолог",
+    purpose: undefined,
+    urgency: "Звичайна",
+    description: undefined,
+    name: undefined,
+    pressure: undefined,
+    bodyMassIndex: undefined,
+    heartDiseases: undefined,
+    age: undefined
+  },
+  dentist: {
+    doctor: "Дантист",
+    purpose: undefined,
+    urgency: "Звичайна",
+    description: undefined,
+    name: undefined,
+    lastVisitDate: undefined
+  },
+  therapist: {
+    doctor: "Терапевт",
+    purpose: undefined,
+    urgency: "Звичайна",
+    description: undefined,
+    name: undefined,
+    age: undefined
+  }
+}
+
+export {root, button, data, changeButtonsValue, config, ajax}
