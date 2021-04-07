@@ -10,9 +10,14 @@ export default class Visit extends Modal{
         this.select = "Кардіолог";
         const select = super.selectDoctor("visit-select-doctor", this.form, this.id); // if default id into methods
         select.addEventListener("click", this.listen);
+        const div = super.wrap("button-wrapper");
+        div.style.justifyContent = "center";
+        config.buttonCancel.position = div;
+        super.button(config.buttonCancel);
     }
 
     listen (event) {
+      
       const label = this.form.lastElementChild;
       const select = this.form.lastElementChild.firstElementChild;
       const [...options] =  select.children;

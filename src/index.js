@@ -7,11 +7,11 @@ import Visit from "./modules/Visit.js";
 
 const client = new Client({});
 onload = (config.token() ?? client.setUp());
-client.auth();
+
 // onchange = (config.token()?? changeButtonsValue());
 
-
-// const visit = new Visit({});
+// client.auth()
+const visit = new Visit({})
 
 
 

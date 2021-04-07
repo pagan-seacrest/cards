@@ -1,12 +1,10 @@
-import {button, data, changeButtonsValue, config} from "./config.js";
+import {root, button, data, changeButtonsValue, config} from "./config.js";
 import Modal from "./Modal.js";
 
 export default class Client {
     constructor(body) {
       config.token() ? button.textContent = "Створити візит" : false;
       this.body = body;
-
-      return button.addEventListener("click", this.auth);
     }
 
     setUp () {
@@ -30,7 +28,6 @@ export default class Client {
       config.buttonCancel.position = div;
       const btLogIn = form.button(config.buttonLogIn);
       const btCancel = form.button(config.buttonCancel);
-
     }
 
     login () {

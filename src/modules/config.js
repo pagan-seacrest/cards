@@ -21,7 +21,6 @@ const config = {
     id: "auth-button-confirm",
     className: "send",
     value: "Вхід",
-    event: null
   },
   buttonCancel: {
     type: "button",

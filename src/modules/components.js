@@ -50,7 +50,7 @@ class Select {
     return document.getElementById(this.id); // if default id into methods
   }
 
-  addUrgencyrSelect (position = this.position, id = this.id, labelFor = this.labelFor) {
+  addUrgencySelect (position = this.position, id = this.id, labelFor = this.labelFor) {
       position.insertAdjacentHTML("beforeend", `
       <label for="${labelFor}">Терміновість
           <select id="${id}">
@@ -91,7 +91,7 @@ class TextArea {
 }
 
 class Button {
-    constructor({type, value, id, className, position, event}) {
+    constructor({type, value, id, className, position}) {
         this.type = type;
         this.value = value;
         this.id = id;
@@ -99,7 +99,7 @@ class Button {
         this.position = position;
         const click = this.add();
         this.eventType = "click";
-        this.type === "submit" ? this.eventType = "submit" : false;
+        this.type === "submit" ? this.eventType = "onsubmit" : false;
         click.addEventListener(this.eventType, this.enableClick);
 
         return click;
@@ -115,6 +115,7 @@ class Button {
     enableClick (event) {
       event.preventDefault();
       event.target.parentElement.parentElement.remove();
+
     }
 
     disableClick (event) {
