@@ -22,27 +22,13 @@ export default class Dashboard {
     this.values.therapist.age.position = this.values.position;
   }
 
-  name () {
-    return new Input(this.values.name).addInput();
-  }
 
-  purpose () {
-    return new Input(this.values.purpose).addInput();
-  }
-
-  description () {
-    return new TextArea(this.values.description).addTextArea();
-  }
-
-  urgency () {
-    return new Select(this.values.urgency).addUrgencySelect();
-  }
 
   cardiologist () {
-    this.name();
-    this.purpose();
-    this.description();
-    this.urgency();
+    // this.name();
+    // this.purpose();
+    // this.description();
+    // this.urgency();
 
     new Input(this.values.cardiologist.pressure).addInput();
     new Input(this.values.cardiologist.bodyMassIndex).addInput();
