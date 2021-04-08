@@ -11,7 +11,11 @@ export default class VisitDentist extends Visit {
 
   listen (event) {
     event.target.parentElement.nextElementSibling.remove();
+<<<<<<< HEAD
     config.visitValues.dentist.lastVisitDate.place = this.form;
+=======
+    config.visitValues.dentist.lastVisitDate.position = this.form;
+>>>>>>> visits
 
     if (event.target.value === "Дантист") {
       super.name();

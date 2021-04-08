@@ -52,9 +52,9 @@ class Select {
       place.insertAdjacentHTML("beforeend", `
       <label for="${labelFor}">Терміновість
           <select id="${id}">
-              <option>Невідкладна</option>
-              <option>Важлива</option>
               <option>Звичайна</option>
+              <option>Важлива</option>
+              <option>Невідкладна</option>Звичайна
           </select>
       </label>`);
 
@@ -79,6 +79,7 @@ class Select {
 class TextArea {
   constructor ({id, place}) {
     this.id = id;
+<<<<<<< HEAD
     this.place = place;
   }
 
@@ -87,6 +88,17 @@ class TextArea {
     <textarea rows="6" cols="40" placeholder="Опис візиту"></textarea>`);
 
     return document.getElementById(id);
+=======
+    this.position = position;
+
+  }
+
+  addTextArea (id = this.id, position = this.position) {
+    position.insertAdjacentHTML("beforeend", `
+    <textarea rows="4" cols="21" placeholder="Опис візиту"></textarea>`);
+
+    return position;
+>>>>>>> visits
   }
 }
 

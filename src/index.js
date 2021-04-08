@@ -4,6 +4,8 @@ import Client from "./modules/Client.js";
 import Modal from "./modules/Modal.js";
 import { Form } from "./modules/components.js";
 import Visit from "./modules/Visit.js";
+import VisitCardiologist from "./modules/VisitCardiologist.js";
+import VisitDentist from "./modules/VisitDentist.js";
 
 const client = new Client({});
 onload = (config.token() ?? client.setUp());
@@ -11,10 +13,15 @@ onload = (config.token() ?? client.setUp());
 // onchange = (config.token()?? changeButtonsValue());
 
 // client.auth()
+<<<<<<< HEAD
 // const visit = new Visit({})
 const form = new Modal({place: root, id: "test", title: "test", className: "test"});
 form.add()
 form.input({})
+=======
+const visit = new VisitCardiologist();
+// const visitD = new VisitDentist();
+>>>>>>> visits
 
 
 

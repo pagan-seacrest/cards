@@ -25,9 +25,16 @@ export default class Modal {
       return wrapper;
     }
 
+<<<<<<< HEAD
     input ({place = this.form, type, name, className, placeholder, id}) {
       return new Input({
         place: place,
+=======
+    input ({position = this.form, id, type, placeholder, name, className}) {
+      return new Input({
+        id: id,
+        position: position,
+>>>>>>> visits
         type: type,
         name: name,
         className: className,
@@ -50,6 +57,11 @@ export default class Modal {
 
     button (attrObject) {
       return new Button(attrObject);
+    }
+
+    destructor (elt) {
+      console.log(this);
+      // elt.remove();
     }
 
 }
