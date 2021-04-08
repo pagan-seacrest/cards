@@ -11,19 +11,22 @@ onload = (config.token() ?? client.setUp());
 // onchange = (config.token()?? changeButtonsValue());
 
 // client.auth()
-const visit = new Visit({})
+// const visit = new Visit({})
+const form = new Modal({place: root, id: "test", title: "test", className: "test"});
+form.add()
+form.input({})
 
 
 
 
 // =========================================
 // const form = new Form(root, "test-form");
-// const elt = new Modal({position: root, id: "bbb", title: "bottle"});
+// const elt = new Modal({place: root, id: "bbb", title: "bottle"});
 // elt.input({id: "test-id", type: "text", placeholder: "test placeHolder"});
 // elt.selectDoctor("select-test-doctor");
 // elt.selectUrgency("select-test-urgency");
 // elt.textArea("test-textarea");
-// config.submitVisit.position = elt.wrap("test-class");
+// config.submitVisit.place = elt.wrap("test-class");
 // elt.button(config.submitVisit);
 // elt.button("test-button")
 // =========================================

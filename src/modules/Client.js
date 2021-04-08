@@ -20,12 +20,12 @@ export default class Client {
     }
 
     auth () {
-      const form = new Modal({position: root, id: "auth-form", title: "Авторизація", className: "modal-title"});
+      const form = new Modal({place: root, id: "auth-form", title: "Авторизація", className: "modal-title"});
       form.input({id: "auth-email", type: "text", placeholder: "Пошта"});
       form.input({id: "auth-password", type: "password", placeholder: "Пароль"});
       const div = form.wrap("button-wrapper");
-      config.buttonLogIn.position = div;
-      config.buttonCancel.position = div;
+      config.buttonLogIn.place = div;
+      config.buttonCancel.place = div;
       const btLogIn = form.button(config.buttonLogIn);
       const btCancel = form.button(config.buttonCancel);
     }

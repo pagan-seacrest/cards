@@ -296,7 +296,7 @@
 //                 const promise = new Promise ((resolve) => {
 //
 //                 loginOrCreate.removeEventListener("click", createVisit);
-//                 const visit  = new Visit({position: root, id: "visit-form"});
+//                 const visit  = new Visit({place: root, id: "visit-form"});
 //                 visit.selectVisit();
 //                 config.element("visit-form").classList.add("new-visit-form");
 //
@@ -320,15 +320,15 @@
 //                     if (num === 0 ) {
 //                         visitDetails.doctor = "Кардіолог";
 //                         resolve();
-//                         return new VisitCardiologist({position: root, id: "visit-form"}).additionalForm();
+//                         return new VisitCardiologist({place: root, id: "visit-form"}).additionalForm();
 //                     } else if (num === 1) {
 //                         visitDetails.doctor = "Дантист";
 //                             resolve();
-//                             return new VisitDentist({position: root, id: "visit-form"}).additionalForm();
+//                             return new VisitDentist({place: root, id: "visit-form"}).additionalForm();
 //                         } else if (num === 2) {
 //                             visitDetails.doctor = "Терапевт";
 //                             resolve();
-//                             return new VisitTherapist({position: root, id: "visit-form"}).additionalForm();
+//                             return new VisitTherapist({place: root, id: "visit-form"}).additionalForm();
 //                         }
 //                 });
 //             });

@@ -2,46 +2,50 @@ import { Form, Input, Select, TextArea, Button } from "./components.js";
 import { config } from "./config.js";
 
 export default class Modal {
-    constructor ({position, id, title, className}) {
-        this.position = position;
+    constructor ({place, id, title}) {
+        this.place = place;
         this.id = id;
-        this.form = new Form(this.position, this.id);
-        config.submitVisit.position = this.form;
-        this.title = function() {
-          this.form.insertAdjacentHTML("beforeend", `<header class="${className}">${title}</header>`);
-        }
-        this.title();
+        config.submitVisit.place = this.form;
+        this.title = title;
+        this.form = null;
     }
 
-    wrap (className, position = this.form) {
+    add () {
+      const form = new Form(this.place, this.id).add();
+      form.insertAdjacentHTML("beforeend", `<header class="modal-title">${this.title}</header>`);
+      this.form = form;
+      return form;
+    }
+
+    wrap (className, place = this.form) {
       const wrapper = document.createElement("div");
       wrapper.className = className;
-      position.append(wrapper);
+      place.append(wrapper);
 
       return wrapper;
     }
 
-    input ({id, type, placeholder, name, className}) {
+    input ({place = this.form, type, name, className, placeholder, id}) {
       return new Input({
-        id: id,
-        position: this.form,
+        place: place,
         type: type,
-        placeholder: placeholder,
         name: name,
-        className: className
-      }).addInput();
+        className: className,
+        placeholder: placeholder,
+        id: id,
+      }).add();
     }
 
-    selectDoctor (id, position = this.form, labelFor = this.form.id) {
-      return new Select ({id: id, position: position, forForm: labelFor}).addDoctorSelect();
+    selectDoctor ({place = this.form, labelFor = this.id, id}) {
+      return new Select ({id: id, place: place, forForm: labelFor}).addDoctorSelect();
     }
 
-    selectUrgency (id, position = this.form) {
-      return new Select ({id: id, position: position, forForm: this.form.id}).addUrgencySelect();
+    selectUrgency ({id, place = this.form, labelFor = this.id}) {
+      return new Select ({id: id, place: place, forForm: labelFor}).addUrgencySelect();
     }
 
-    textArea (id, position = this.form) {
-      return new TextArea({id: id, position: position}).addTextArea();
+    textArea (id, place = this.form) {
+      return new TextArea({id: id, place: place}).add();
     }
 
     button (attrObject) {

@@ -17,20 +17,20 @@ function changeButtonsValue () {
 const config = {
   buttonLogIn: {
     type: "submit",
-    position: root,
+    place: root,
     id: "auth-button-confirm",
     className: "send",
     value: "Вхід",
   },
   buttonCancel: {
     type: "button",
-    position: root,
+    place: root,
     id: "auth-button-cancel",
     className: "cancel",
     value: "Відмінити"
   },
   newVisitModal: {
-    position: document.getElementById("root"),
+    place: document.getElementById("root"),
     id: "visit-form",
     title: "Створення візиту",
   },
@@ -41,7 +41,7 @@ const config = {
   },
     visitCommonValues: {
         name: {
-            // position: form,
+            // place: form,
             type: "text",
             placeHolder: "ПІБ",
             id: "visit-name",
@@ -49,7 +49,7 @@ const config = {
             name: null
         },
         purpose: {
-            // position: form,
+            // place: form,
             type: "text",
             placeHolder: "Мета вашого візиту",
             id: "visit-purpose",
@@ -57,7 +57,7 @@ const config = {
             name: null
         },
         description: {
-            // position: form,
+            // place: form,
             type: "text",
             placeHolder: "Короткий опис візиту",
             id: "visit-description",
@@ -65,13 +65,13 @@ const config = {
             name: null
         },
         urgency: {
-            // position: form,
+            // place: form,
             id: "visit-urgency"
         }
     },
     visitCardiologist: {
         presssure: {
-            // position: form,
+            // place: form,
             type: "text",
             placeHolder: "Тиск зазвичай",
             id: "visit-pressure",
@@ -79,7 +79,7 @@ const config = {
             name: null
         },
         bodyMassIndex: {
-            // position: form,
+            // place: form,
             type: "number",
             placeHolder: "Індекс маси тіла",
             id: "visit-date",
@@ -87,7 +87,7 @@ const config = {
             name: null
         },
         age: {
-            // position: form,
+            // place: form,
             type: "number",
             placeHolder: "Вік",
             id: "visit-age",
@@ -96,23 +96,23 @@ const config = {
         }
     },
     visitDentist: {
-        // position: form,
+        // place: form,
         type: "number",
         placeHolder: null,
         id: "visit-date",
         className: null
     },
     visitTherapist: {
-        // position: form,
+        // place: form,
         type: "number",
         placeHolder: "Вік",
         id: "visit-age",
         className: null
     },
-    buttonWrapper (position, className) {
+    buttonWrapper (place, className) {
         const div = document.createElement("div");
         div.className = `${className}`;
-        position.append(div);
+        place.append(div);
 
         return div;
     },

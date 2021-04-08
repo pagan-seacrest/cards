@@ -1,57 +1,55 @@
 class Form {
-    constructor (position, id) {
+    constructor (place, id) {
         this.id = id;
-        this.position = position;
-        return this.addForm();
+        this.place = place;
     }
 
-    addForm () {
-      this.position.insertAdjacentHTML("beforeend", `
-      <form id="${this.id}" class="form modal"></form>`);
+    add () {
+      this.place.insertAdjacentHTML("beforeend", `
+      <form id="${this.id}" class="modal"></form>`);
 
-        return document.getElementById(this.id);
+      return document.getElementById(this.id);
     }
 
-    createForm () {
+    create () {
       const form = document.createElement("form");
       form.id = this.id
-      this.position.append(form);
+      this.place.append(form);
 
       return form;
     }
 }
 
 class Input {
-    constructor ({position, type, name, className, placeholder, id}) {
+    constructor ({place, type, name, className, placeholder, id}) {
         this.type = type;
         this.placeHolder = placeholder;
         this.id = id;
         this.name = name;
-        this.position = position;
+        this.place = place;
         this.className = className;
     }
 
-    addInput (position = this.position, id = this.id) {
-        position.insertAdjacentHTML("beforeend", `
+    add (place = this.place, id = this.id) {
+        place.insertAdjacentHTML("beforeend", `
         <input type="${this.type}"
         class="${this.className}"
         id="${this.id}" name="${this.name}"
         placeholder="${this.placeHolder}" required>`);
 
-        return document.getElementById(`${id}`);
+        return document.getElementById(id);
     }
   }
 
 class Select {
-  constructor ({id, position, forForm}) {
+  constructor ({id, place, forForm}) {
     this.id = id;
     this.labelFor = forForm;
-    this.position = position;
-    return document.getElementById(this.id); // if default id into methods
+    this.place = place;
   }
 
-  addUrgencySelect (position = this.position, id = this.id, labelFor = this.labelFor) {
-      position.insertAdjacentHTML("beforeend", `
+  addUrgencySelect (place = this.place, id = this.id, labelFor = this.labelFor) {
+      place.insertAdjacentHTML("beforeend", `
       <label for="${labelFor}">Терміновість
           <select id="${id}">
               <option>Невідкладна</option>
@@ -60,11 +58,11 @@ class Select {
           </select>
       </label>`);
 
-      return document.getElementById(`${id}`)
+      return document.getElementById(`${id}`);
   }
 
-  addDoctorSelect (position = this.position, id = this.id, labelFor = this.labelFor) {
-      position.insertAdjacentHTML("beforeend", `
+  addDoctorSelect (place = this.place, id = this.id, labelFor = this.labelFor) {
+      place.insertAdjacentHTML("beforeend", `
       <label for="${labelFor}">Виберіть лікаря
           <select id="${id}">
               <option>Кардіолог</option>
@@ -73,30 +71,32 @@ class Select {
           </select>
       </label>`);
 
-      return document.getElementById(`${id}`)
+      return document.getElementById(id);
   }
 
 }
 
 class TextArea {
-  constructor ({id, position}) {
+  constructor ({id, place}) {
     this.id = id;
-    this.position = position;
+    this.place = place;
   }
 
-  addTextArea (id = this.id, position = this.position) {
-    position.insertAdjacentHTML("beforeend", `
+  add (id = this.id, place = this.place) {
+    place.insertAdjacentHTML("beforeend", `
     <textarea rows="6" cols="40" placeholder="Опис візиту"></textarea>`);
+
+    return document.getElementById(id);
   }
 }
 
 class Button {
-    constructor({type, value, id, className, position}) {
+    constructor({type, value, id, className, place}) {
         this.type = type;
         this.value = value;
         this.id = id;
         this.className = className;
-        this.position = position;
+        this.place = place;
         const click = this.add();
         this.eventType = "click";
         this.type === "submit" ? this.eventType = "onsubmit" : false;
@@ -106,7 +106,7 @@ class Button {
     }
 
     add () {
-        this.position.insertAdjacentHTML("beforeend", `
+        this.place.insertAdjacentHTML("beforeend", `
         <button type="${this.type}" id="${this.id}" class="${this.className}">${this.value}</button>`);
 
         return document.getElementById(this.id)

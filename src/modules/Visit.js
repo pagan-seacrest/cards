@@ -3,8 +3,8 @@ import { Form, Input, Select, TextArea, Button} from "./components.js";
 import Modal from "./Modal.js";
 
 export default class Visit extends Modal{
-    constructor ({position = root, id = "visit-form", title = "Створення візиту", className = "modal-title"}) {
-        super({position: position, id: id, title: title, className: className});
+    constructor ({place = root, id = "visit-form", title = "Створення візиту", className = "modal-title"}) {
+        super({place: place, id: id, title: title, className: className});
         this.form = document.getElementById(id);
         this.id = id;
         this.select = "Кардіолог";
@@ -12,12 +12,12 @@ export default class Visit extends Modal{
         select.addEventListener("click", this.listen);
         const div = super.wrap("button-wrapper");
         div.style.justifyContent = "center";
-        config.buttonCancel.position = div;
+        config.buttonCancel.place = div;
         super.button(config.buttonCancel);
     }
 
     listen (event) {
-      
+
       const label = this.form.lastElementChild;
       const select = this.form.lastElementChild.firstElementChild;
       const [...options] =  select.children;
