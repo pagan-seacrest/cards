@@ -1,3 +1,5 @@
+import { config, data } from "./config.js";
+import Client from "./Client.js";
 class Form {
     constructor (place, id) {
         this.id = id;
@@ -31,13 +33,40 @@ class Input {
     }
 
     add (place = this.place, id = this.id) {
+      if (document.getElementById(id) !== null) {
+        return document.getElementById(id);
+      } else {
         place.insertAdjacentHTML("beforeend", `
         <input type="${this.type}"
         class="${this.className}"
         id="${this.id}" name="${this.name}"
         placeholder="${this.placeHolder}" required>`);
+        document.getElementById(id).addEventListener("blur", this.listen);
 
         return document.getElementById(id);
+      }
+    }
+
+    listen (event) {
+      switch (this.id) {
+        case config.visitValues.name.id: data.name = event.target.value;
+          break;
+          case config.visitValues.purpose.id: data.purpose = event.target.value;
+            break;
+            case config.visitValues.therapist.age.id: data.age = event.target.value;
+              break;
+              case config.visitValues.cardiologist.age.id: data.age = event.target.value;
+                break;
+                case config.visitValues.cardiologist.pressure.id: data.pressure = event.target.value;
+                  break;
+                  case config.visitValues.dentist.lastVisitDate.id: data.lastVisitDate = event.target.value;
+                    break;
+                    case config.visitValues.cardiologist.heartDiseases.id: data.heartDiseases = event.target.value;
+                      break;
+                      case config.visitValues.cardiologist.bodyMassIndex.id: data.bodyMassIndex = event.target.value;
+                        break;
+                          default: return;
+      }
     }
   }
 
@@ -57,13 +86,13 @@ class Select {
               <option>Невідкладна</option>Звичайна
           </select>
       </label>`);
-
+      document.getElementById(id).addEventListener("click", this.listen);
       return document.getElementById(`${id}`);
   }
 
   addDoctorSelect (place = this.place, id = this.id, labelFor = this.labelFor) {
       place.insertAdjacentHTML("beforeend", `
-      <label for="${labelFor}">Виберіть лікаря
+      <label class="doctor-modal-select" for="${labelFor}">Виберіть лікаря
           <select id="${id}">
               <option>Кардіолог</option>
               <option>Дантист</option>
@@ -74,31 +103,28 @@ class Select {
       return document.getElementById(id);
   }
 
+  listen (event) {
+    data.urgency = event.target.value;
+  }
+
 }
 
 class TextArea {
   constructor ({id, place}) {
     this.id = id;
-<<<<<<< HEAD
     this.place = place;
   }
 
   add (id = this.id, place = this.place) {
     place.insertAdjacentHTML("beforeend", `
-    <textarea rows="6" cols="40" placeholder="Опис візиту"></textarea>`);
+    <textarea id="${id}" rows="4" cols="22" placeholder="Опис візиту"></textarea>`);
+    document.getElementById(id).addEventListener("blur", this.listen);
 
     return document.getElementById(id);
-=======
-    this.position = position;
-
   }
 
-  addTextArea (id = this.id, position = this.position) {
-    position.insertAdjacentHTML("beforeend", `
-    <textarea rows="4" cols="21" placeholder="Опис візиту"></textarea>`);
-
-    return position;
->>>>>>> visits
+  listen (event) {
+    data.description = event.target.value;
   }
 }
 
@@ -111,8 +137,8 @@ class Button {
         this.place = place;
         const click = this.add();
         this.eventType = "click";
-        this.type === "submit" ? this.eventType = "onsubmit" : false;
-        click.addEventListener(this.eventType, this.enableClick);
+        this.type === "submit" ? this.eventType = "submit" : false;
+        click.parentElement.parentElement.addEventListener(this.eventType, this.enableClick);
 
         return click;
     }
@@ -126,12 +152,13 @@ class Button {
 
     enableClick (event) {
       event.preventDefault();
-      event.target.parentElement.parentElement.remove();
+      event.target.id === "cancel" ?
+      event.target.parentElement.parentElement.remove() : false;
 
-    }
-
-    disableClick (event) {
-
+      if (event.target.id === "authorization") {
+        new Client({}).setUp();
+        event.target.parentElement.parentElement.remove();
+      }
     }
   }
 

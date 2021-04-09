@@ -4,37 +4,39 @@ import Visit from "./Visit.js";
 
 export default class VisitCardiologist extends Visit {
   constructor() {
-<<<<<<< HEAD
-    super({place: document.getElementById("visit-form")});
-=======
-    super({position: document.getElementById("visit-form")});
->>>>>>> visits
-    this.select =  document.getElementById("visit-form").children[1].children[0];
-    this.select.addEventListener("click", this.listen);
+    super({});
+    super.setUp();
+    if (document.getElementById("visit-form") !== null) {
+    this.form = document.getElementById("visit-form");
+    this.select = this.form.children[1].children[0];
+    this.select.addEventListener("click", (ev) => {
+      ev.target.parentElement.nextElementSibling.remove();
+
+      config.visitValues.cardiologist.pressure.place = this.form;
+      config.visitValues.cardiologist.bodyMassIndex.place = this.form;
+      config.visitValues.cardiologist.age.place = this.form;
+      config.visitValues.cardiologist.pressure.place = this.form;
+      config.visitValues.cardiologist.bodyMassIndex.place = this.form;
+      config.visitValues.cardiologist.age.place = this.form;
+      config.visitValues.cardiologist.heartDiseases.place = this.form;
+
+      if (ev.target.value === null || ev.target.value === undefined || ev.target.value === "Кардіолог") {
+        super.setUp();
+        super.name();
+        super.purpose();
+        super.description();
+        super.urgency();
+        new Input(config.visitValues.cardiologist.pressure).add();
+        new Input(config.visitValues.cardiologist.heartDiseases).add();
+        new Input(config.visitValues.cardiologist.bodyMassIndex).add();
+        new Input(config.visitValues.cardiologist.age).add();
+        super.buttons(this.form);
+        ev.target.parentElement.remove();
+        this.form.children[0].textContent = "Створення візиту: Кардіолог";
+      } else {
+        return;
+      }
+    });
   }
-
-  listen (event) {
-    event.target.parentElement.nextElementSibling.remove();
-<<<<<<< HEAD
-    config.visitValues.cardiologist.pressure.place = this.form;
-    config.visitValues.cardiologist.bodyMassIndex.place = this.form;
-    config.visitValues.cardiologist.age.place = this.form;
-=======
-    config.visitValues.cardiologist.pressure.position = this.form;
-    config.visitValues.cardiologist.bodyMassIndex.position = this.form;
-    config.visitValues.cardiologist.age.position = this.form;
->>>>>>> visits
-
-    if (event.target.value === null || event.target.value === undefined || event.target.value === "Кардіолог") {
-      super.name();
-      super.purpose();
-      super.description();
-      super.urgency();
-      new Input(config.visitValues.cardiologist.pressure).addInput();
-      new Input(config.visitValues.cardiologist.bodyMassIndex).addInput();
-      new Input(config.visitValues.cardiologist.age).addInput();
-    } else {
-      return;
-    }
   }
 }

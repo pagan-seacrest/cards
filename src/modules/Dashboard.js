@@ -1,59 +1,23 @@
-// import { config, root, loginOrCreate } from "./config.js";
-// import Client from "./Client.js";
-// import Visit from "./Visit.js";
-// import VisitCardiologist from "./VisitCardiologist.js";
-// import VisitDentist from "./VisitDentist.js";
-// import VisitTherapist from "./VisitTherapist.js";
-// import login from "./login.js";
+import { config, root, button } from "./config.js";
+import VisitCardiologist from "./VisitCardiologist.js";
+import VisitDentist from "./VisitDentist.js";
+import VisitTherapist from "./VisitTherapist.js";
 import {Input, Select, TextArea, Button} from "./components.js";
+import Client from "./Client.js";
 
 export default class Dashboard {
   constructor (values) {
-    this.values = values;
-    this.values.name.position = this.values.position;
-    this.values.purpose.position = this.values.position;
-    this.values.description.position = this.values.position;
-    this.values.urgency.position = this.values.position;
-    this.values.urgency.forForm = this.values.position.id;
-    this.values.cardiologist.pressure.position = this.values.position;
-    this.values.cardiologist.bodyMassIndex.position = this.values.position;
-    this.values.cardiologist.age.position = this.values.position;
-    this.values.dentist.lastVisitDate.position = this.values.position;
-    this.values.therapist.age.position = this.values.position;
+    this.client = new Client({});
+    config.token() ? button.textContent = "Створити візит" : button.addEventListener("click", this.client.auth);
+    config.token() && button.textContent === "Створити візит" ? button.addEventListener("click", this.createVisit) : false;
+
   }
 
-
-
-  cardiologist () {
-    // this.name();
-    // this.purpose();
-    // this.description();
-    // this.urgency();
-
-    new Input(this.values.cardiologist.pressure).addInput();
-    new Input(this.values.cardiologist.bodyMassIndex).addInput();
-    new Input(this.values.cardiologist.age).addInput();
+  createVisit () {
+    new VisitCardiologist({});
+    new VisitDentist({});
+    new VisitTherapist({});
   }
-
-  dentist () {
-    this.name();
-    this.purpose();
-    this.description();
-    this.urgency();
-
-    new Input(this.values.dentist.lastVisitDate).addInput();
-  }
-
-  therapist () {
-    this.name();
-    this.purpose();
-    this.description();
-    this.urgency();
-
-    new Input(this.values.therapist.age).addInput();
-  }
-
-
 
 
 }

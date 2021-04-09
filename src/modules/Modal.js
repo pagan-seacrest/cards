@@ -5,7 +5,6 @@ export default class Modal {
     constructor ({place, id, title}) {
         this.place = place;
         this.id = id;
-        config.submitVisit.place = this.form;
         this.title = title;
         this.form = null;
     }
@@ -14,32 +13,22 @@ export default class Modal {
       const form = new Form(this.place, this.id).add();
       form.insertAdjacentHTML("beforeend", `<header class="modal-title">${this.title}</header>`);
       this.form = form;
+      config.submit.place = this.form;
       return form;
     }
 
-    wrap (className, place = this.form) {
-      const wrapper = document.createElement("div");
+    wrap (className, element = "div", place = this.form, value = "") {
+      const wrapper = document.createElement(element);
       wrapper.className = className;
+      wrapper.textContent = value;
       place.append(wrapper);
 
       return wrapper;
     }
 
-<<<<<<< HEAD
-    input ({place = this.form, type, name, className, placeholder, id}) {
+    input ({place = this.form, id, type, placeholder, name, className}) {
       return new Input({
-        place: place,
-=======
-    input ({position = this.form, id, type, placeholder, name, className}) {
-      return new Input({
-        id: id,
-        position: position,
->>>>>>> visits
-        type: type,
-        name: name,
-        className: className,
-        placeholder: placeholder,
-        id: id,
+        id: id, place: place, type: type, name: name, className: className, placeholder: placeholder
       }).add();
     }
 
@@ -51,17 +40,11 @@ export default class Modal {
       return new Select ({id: id, place: place, forForm: labelFor}).addUrgencySelect();
     }
 
-    textArea (id, place = this.form) {
+    textArea ({id, place = this.form}) {
       return new TextArea({id: id, place: place}).add();
     }
 
     button (attrObject) {
       return new Button(attrObject);
     }
-
-    destructor (elt) {
-      console.log(this);
-      // elt.remove();
-    }
-
 }

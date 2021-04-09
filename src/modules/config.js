@@ -8,6 +8,17 @@ const data = {
         "password": "velocity"
     },
     url: "https://ajax.test-danit.com/api/v2/cards/",
+
+    name: undefined,
+    purpose: undefined,
+    description: undefined,
+    urgency: undefined,
+    bodyMassIndex: undefined,
+    pressure: undefined,
+    heartDiseases: undefined,
+    lastVisitDate: undefined,
+    age: undefined
+
 }
 
 function changeButtonsValue () {
@@ -15,17 +26,17 @@ function changeButtonsValue () {
 }
 
 const config = {
-  buttonLogIn: {
+  confirm: {
     type: "submit",
     place: root,
-    id: "auth-button-confirm",
+    id: "confirm",
     className: "send",
     value: "Вхід",
   },
-  buttonCancel: {
+  cancel: {
     type: "button",
     place: root,
-    id: "auth-button-cancel",
+    id: "cancel",
     className: "cancel",
     value: "Відмінити"
   },
@@ -34,15 +45,22 @@ const config = {
     id: "visit-form",
     title: "Створення візиту",
   },
-  submitVisit: {
+  authorize: {
     type: "submit",
-    id: "submit-visit",
-    value: "Створити візит"
+    place: root,
+    id: "authorization",
+    className: "send",
+    value: "Вхід",
+  },
+  submit: {
+    type: "submit",
+    id: "submit",
+    value: "Створити"
   },
     visitValues: {
-      position: root,
+      place: root,
         name: {
-            position: root,
+            place: root,
             type: "text",
             placeholder: "ПІБ",
             id: "visit-form-name",
@@ -50,7 +68,7 @@ const config = {
             name: undefined
         },
         purpose: {
-            position: root,
+            place: root,
             type: "text",
             placeholder: "Мета вашого візиту",
             id: "visit-form-purpose",
@@ -58,29 +76,34 @@ const config = {
             name: undefined
         },
         description: {
-            position: root,
-            type: "text",
+            place: root,
             placeholder: "Короткий опис візиту",
             id: "visit-form-description",
-            className: undefined,
-            name: undefined
         },
         urgency: {
-            position: root,
+            place: root,
             id: "visit-form-urgency",
             forForm: undefined,
         },
         cardiologist: {
           pressure: {
-              position: root,
+              place: root,
               type: "text",
               placeholder: "Тиск зазвичай",
               id: "visit-form-pressure",
               className: undefined,
               name: undefined
           },
+          heartDiseases: {
+            place: root,
+            type: "text",
+            placeholder: "Перенесені хворови серця",
+            id: "visit-form-diseases",
+            className: undefined,
+            name: undefined
+          },
           bodyMassIndex: {
-              position: root,
+              place: root,
               type: "number",
               placeholder: "Індекс маси тіла",
               id: "visit-form-date",
@@ -88,7 +111,7 @@ const config = {
               name: undefined
           },
           age: {
-              position: root,
+              place: root,
               type: "number",
               placeholder: "Вік",
               id: "visit-form-age",
@@ -98,7 +121,7 @@ const config = {
       },
       dentist: {
         lastVisitDate: {
-          position: root,
+          place: root,
           type: "date",
           placeholder: undefined,
           id: "visit-form-date",
@@ -107,7 +130,7 @@ const config = {
       },
       therapist: {
         age: {
-          position: root,
+          place: root,
           type: "number",
           placeholder: "Вік",
           id: "visit-form-age",
@@ -116,7 +139,7 @@ const config = {
       },
     },
 
-    buttonWrapper (position, className) {
+    buttonWrapper (place, className) {
         const div = document.createElement("div");
         div.className = `${className}`;
         place.append(div);

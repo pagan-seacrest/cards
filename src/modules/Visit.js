@@ -1,79 +1,55 @@
 import { root, button, data, changeButtonsValue, config } from "./config.js";
 import { Form, Input, Select, TextArea, Button } from "./components.js";
-// import Dashboard from "./Dashboard.js";
 import Modal from "./Modal.js";
 
 export default class Visit extends Modal{
-<<<<<<< HEAD
-    constructor ({place = root, id = "visit-form", title = "Створення візиту", className = "modal-title"}) {
-        super({place: place, id: id, title: title, className: className});
-        this.form = document.getElementById(id);
-=======
-    constructor ({position = root, id = "visit-form", title = "Створення візиту", className = "modal-title"}) {
-        super({position: position, id: id, title: title, className: className});
->>>>>>> visits
+    constructor ({place = root, id = "visit-form", title = "Створення візиту"}) {
+        super({place: place, id: id, title: title});
         this.id = id;
-        this.form = document.getElementById(this.id);
-        config.visitValues.position = this.form;
-        const select = super.selectDoctor("visit-select-doctor", this.form, this.id); // if default id into methods
-        this.select = select;
-        // select.addEventListener("click", this.listen);
-        const div = super.wrap("button-wrapper");
-        div.style.justifyContent = "center";
-        config.buttonCancel.place = div;
-        super.button(config.buttonCancel);
+        this.place = place;
+        this.title = title;
+        this.form = null;
     }
 
-    listen (event) {
-<<<<<<< HEAD
+    setUp () {
+      if (document.getElementById("visit-form") === null) {
+        this.form = super.add();
+        config.visitValues.place = this.form;
+        const select = super.selectDoctor({id: "visit-select-doctor", place: this.form, forForm: this.id});
+        this.select = select;
 
-      const label = this.form.lastElementChild;
-      const select = this.form.lastElementChild.firstElementChild;
-      const [...options] =  select.children;
-      options.forEach((opt, i) => opt.id = "doctor-option" + i);
-=======
-      event.target.parentElement.nextElementSibling.remove();
-      config.visitValues.position = this.form;
-
-      if (event.target.value === null || event.target.value === undefined || event.target.value === "Кардіолог") {
-        this.name();
-        this.purpose();
-        this.description();
-        this.urgency();
-        this.derivedObject.cardiologist();
-      } else if (event.target.value === "Дантист") {
-        this.name();
-        this.purpose();
-        this.description();
-        this.urgency();
-        this.derivedObject.dentist();
-      } else if (event.target.value === "Терапевт") {
-        this.name();
-        this.purpose();
-        this.description();
-        this.urgency();
-        this.derivedObject.therapist();
+        const div = super.wrap("button-wrapper");
+        div.style.justifyContent = "center";
+        config.cancel.place = div;
+        super.button(config.cancel);
       }
     }
 
     name () {
-      config.visitValues.name.position = this.form;
-      return new Input(config.visitValues.name).addInput();
+      config.visitValues.name.place = this.form;
+      return new Input(config.visitValues.name).add();
     }
 
     purpose () {
-      config.visitValues.purpose.position = this.form;
-      return new Input(config.visitValues.purpose).addInput();
+      config.visitValues.purpose.place = this.form;
+      return new Input(config.visitValues.purpose).add();
     }
 
     description () {
-      config.visitValues.description.position = this.form;
-      return new TextArea(config.visitValues.description).addTextArea();
->>>>>>> visits
+      config.visitValues.description.place = this.form;
+      return new TextArea(config.visitValues.description).add();
     }
 
     urgency () {
-      config.visitValues.urgency.position = this.form;
+      config.visitValues.urgency.place = this.form;
       return new Select(config.visitValues.urgency).addUrgencySelect();
+    }
+
+    buttons (place) {
+      const wrapper = super.wrap("button-wrapper", "div", place);
+      config.submit.place = wrapper;
+      config.cancel.place = wrapper;
+      super.button(config.submit);
+      super.button(config.cancel);
     }
 }
