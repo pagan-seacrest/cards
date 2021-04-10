@@ -4,19 +4,31 @@ import VisitDentist from "./VisitDentist.js";
 import VisitTherapist from "./VisitTherapist.js";
 import {Input, Select, TextArea, Button} from "./components.js";
 import Client from "./Client.js";
+import Modal from "./Modal.js";
 
 export default class Dashboard {
   constructor (values) {
-    this.client = new Client({});
-    config.token() ? button.textContent = "Створити візит" : button.addEventListener("click", this.client.auth);
-    config.token() && button.textContent === "Створити візит" ? button.addEventListener("click", this.createVisit) : false;
+  
+  }
 
+  init () {
+    const client = new Client({});
+    config.token() ? button.textContent = "Створити візит" : button.addEventListener("click", client.auth);
+    if (config.token() && button.textContent === "Створити візит") {
+      button.addEventListener("click", this.createVisit);
+      this.update()
+    } 
   }
 
   createVisit () {
     new VisitCardiologist({});
     new VisitDentist({});
     new VisitTherapist({});
+  }
+
+  update () {
+    const dashboard = new Modal({place: root, id: "dashboard", title: "dashboard"});
+    dashboard.add();
   }
 
 

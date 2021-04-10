@@ -9,6 +9,7 @@ import VisitDentist from "./modules/VisitDentist.js";
 import VisitTherapist from "./modules/VisitTherapist.js";
 
 const dashboard = new Dashboard();
+dashboard.init();
 // const client = new Client({});
 // client.auth()
 //

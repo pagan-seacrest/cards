@@ -3,10 +3,10 @@ import VisitCardiologist from "./VisitCardiologist.js";
 import VisitDentist from "./VisitDentist.js";
 import VisitTherapist from "./VisitTherapist.js";
 import Modal from "./Modal.js";
+import Dashboard from "./Dashboard.js";
 
 export default class Client {
     constructor(body) {
-      // config.token() ? button.textContent = "Створити візит" : button.addEventListener("click", this.auth);
       this.body = body;
 
     }
@@ -16,11 +16,7 @@ export default class Client {
         const thread = new Promise((resolve, reject) => {
           this.login().then(res => resolve(localStorage.setItem("token", res)));
           button.removeEventListener("click", this.auth);
-          button.addEventListener("click", (ev) => {
-            new VisitCardiologist({});
-            new VisitDentist({});
-            new VisitTherapist({});
-          })
+          button.addEventListener("click", () => new Dashboard().createVisit());
         });
         thread.then(() => changeButtonsValue());
         thread.catch(err => console.log(`${err} \n >>> Promise "thread" error: login failure `));
