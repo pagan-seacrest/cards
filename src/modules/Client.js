@@ -1,4 +1,4 @@
-import {root, button, data, changeButtonsValue, config} from "./config.js";
+import {root, button, ajax, changeButtonsValue, config} from "./config.js";
 import VisitCardiologist from "./VisitCardiologist.js";
 import VisitDentist from "./VisitDentist.js";
 import VisitTherapist from "./VisitTherapist.js";
@@ -11,11 +11,11 @@ export default class Client {
 
     }
 
-    setUp () {
+    auth () {
       try {
         const thread = new Promise((resolve, reject) => {
           this.login().then(res => resolve(localStorage.setItem("token", res)));
-          button.removeEventListener("click", this.auth);
+          button.removeEventListener("click", this.setup);
           button.addEventListener("click", () => new Dashboard().createVisit());
         });
         thread.then(() => changeButtonsValue());
@@ -25,7 +25,7 @@ export default class Client {
       }
     }
 
-    auth () {
+    setup () {
       if (document.getElementById("auth-form") === null) {
 
       const auth = new Modal({place: root, id: "auth-form", title: "Авторизація"});
@@ -42,80 +42,88 @@ export default class Client {
     }
 
     login () {
-    return  fetch(`${data.url}login`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(data.account)
-      }).then(res => res.text())
+        try {
+            return fetch(`${ajax.url}login`, {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(ajax.account)
+            }).then(res => res.text());
+        } catch (err) {
+            console.log(new Error(err));
+        }
     }
 
     async get () {
-            const request = await fetch("https://ajax.test-danit.com/api/cards", {
+        try {
+            const req = await fetch(ajax.url, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${config.token()}`
                 }
             });
-            return await request.json();
+            return await req.json();
+        } catch (err) {
+            console.log(new Error(err));
+        }
     }
 
     async card (id) {
-        const req = await fetch(`https://ajax.test-danit.com/api/cards/${id}`,
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            "Authorization": `Bearer ${config.token()}`
-            }
-        })
-        const step =  await req.json();
-        return step;
+        try {
+            const req = await fetch(`${ajax.url}${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${config.token()}`
+                }
+            })
+            return await req.json();
+        } catch (err) {
+            console.log(new Error(err));
+        }
     }
-/*
+    
     async post () {
-        const req = await fetch("https://ajax.test-danit.com/api/cards", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${config.token()}`
-            },
-            body: JSON.stringify(this.body)
-        });
-        const res = await req.json();
-        const reload = new Dashboard({});
-        document.getElementById("search").remove();
-        document.getElementById("dashboard").remove();
-        reload.update();
-        reload.create();
-        return res;
+        try {
+            const req = await fetch(ajax.url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${config.token()}`
+                },
+                body: JSON.stringify(this.body)
+            });
+            return await req.json();
+        } catch (err) {
+            console.log(new Error(err));
+        }
     }
 
     async put (id) {
-        const req = await fetch(`https://ajax.test-danit.com/api/cards/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${config.token()}`
-            },
-            body: JSON.stringify(this.body)
-        });
-        const res = await req.json();
-        const reload = new Dashboard({});
-        document.getElementById("search").remove();
-        document.getElementById("dashboard").remove();
-        reload.update();
-        reload.create();
-        return res;
+        try {
+            const req = await fetch(`${ajax.url}${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${config.token()}`
+                },
+                body: JSON.stringify(this.body)
+            });
+            return await req.json();
+        } catch (err) {
+            console.log(new Error(err));
+        }
     }
-*/
+
     async delete (id) {
-        return await fetch(`https://ajax.test-danit.com/api/cards/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${config.token()}`
-            },
-        });
+        try {
+            const req = await fetch(`${ajax.url}${id}`, {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${config.token()}` },
+            });
+            return await req.text();
+        } catch (err) {
+            console.log(new Error(err));
+        }
     }
 }

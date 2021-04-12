@@ -1,17 +1,15 @@
-import { root, button, data, changeButtonsValue, config } from "./config.js";
+import { root, button, ajax, changeButtonsValue, config } from "./config.js";
 import { Form, Input, Select, TextArea, Button } from "./components.js";
 import Visit from "./Visit.js";
 
 export default class VisitCardiologist extends Visit {
   constructor() {
     super({});
-    super.setUp();
+    super.setup();
     if (document.getElementById("visit-form") !== null) {
-    this.form = document.getElementById("visit-form");
-    this.select = this.form.children[1].children[0];
-    this.select.addEventListener("click", (ev) => {
-      ev.target.parentElement.nextElementSibling.remove();
-
+      this.form = document.getElementById("visit-form");
+      this.select = this.form.children[1].children[0];
+      this.select.addEventListener("click", (ev) => {
       config.visitValues.cardiologist.pressure.place = this.form;
       config.visitValues.cardiologist.bodyMassIndex.place = this.form;
       config.visitValues.cardiologist.age.place = this.form;
@@ -19,9 +17,10 @@ export default class VisitCardiologist extends Visit {
       config.visitValues.cardiologist.bodyMassIndex.place = this.form;
       config.visitValues.cardiologist.age.place = this.form;
       config.visitValues.cardiologist.heartDiseases.place = this.form;
-
+  
       if (ev.target.value === null || ev.target.value === undefined || ev.target.value === "Кардіолог") {
-        super.setUp();
+        document.getElementById("cancel").parentElement.remove();
+        super.setup();
         super.name();
         super.purpose();
         super.description();
@@ -33,10 +32,9 @@ export default class VisitCardiologist extends Visit {
         super.buttons(this.form);
         ev.target.parentElement.remove();
         this.form.children[0].textContent = "Створення візиту: Кардіолог";
-      } else {
-        return;
-      }
-    });
+      } else { return; }
+      }, {once: true});
+    }
   }
-  }
+  
 }

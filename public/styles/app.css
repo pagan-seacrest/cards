@@ -48,9 +48,9 @@ button {
     text-shadow: 1px 1px 2px black;
 }
 input, select, textarea {
-  border-radius: 8px;
-  outline: none;
-  border: 2px solid rgb(141, 141, 141);
+    border-radius: 8px;
+    outline: none;
+    border: 2px solid rgb(141, 141, 141);
 }
 
 #button,
@@ -63,7 +63,10 @@ input, select, textarea {
     font-size: 20px;
 }
 
+
 #search {margin-right: 50px;}
+
+#button {margin-right: 20px}
 
 #button:hover {cursor: pointer;}
 
@@ -92,36 +95,36 @@ input, select, textarea {
     padding-bottom: 20px;
 }
 .modal-title {
-  width: 100%;
-  margin-top: 0;
-  display: flex;
-  justify-content: center;
-  font-size: 18px;
-  color: #fff;
-  background-color: rgb(87, 87, 87);
+    width: 100%;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+    background-color: rgb(87, 87, 87);
   border-radius: 20px 20px 0  0;
 }
 .modal *:not(:first-child) {
-  margin: 5px 0;
+    margin: 5px 0;
 }
 
 .button-wrapper{
-  display: flex;
+    display: flex;
   align-items: center;
   justify-content: space-between;
   width: 50%;
 }
 .button-wrapper button {
-  border: 1px solid #00aeff;
-  border-radius: 10px;
-  font-size: 14px;
-  background-color: #58bae7;
-  width: 100px;
+    border: 1px solid #00aeff;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: #58bae7;
+    width: 100px;
 }
 
 #auth-form {
-  width: 500px;
-  height: 150px;
+    width: 500px;
+    height: 150px;
 }
 
 #auth {
@@ -131,140 +134,83 @@ input, select, textarea {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    
+}
 
+#dashboard {
+    position: relative;
+    width: 1240px;
+    min-height: 128px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: baseline;
+    align-content: center;
+}
+#dashboard .modal-title {
+    position: absolute;
 }
 
 .card {
     position: relative;
     background-color: #fff;
-    border: 1px solid #00aeff;
+    border: 1px solid #000000;
     border-radius: 20px;
-    width: 200px;
-}
-.panel-button-wrapper {
-    display: flex;
-    justify-content: flex-end;
     width: 300px;
-}
-#button {margin-right: 20px}
-
-/* .card-title, .edit-title, #auth-title, .create-title, .search-title, .modal-title {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-title {
     font-size: 18px;
-    color: #fff;
-    background-color: rgb(87, 87, 87);
-    border-radius: 20px 20px 0  0;
-} */
-
-/* .card-content {
-    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2px;
+    height: 30px;
+    border-bottom: 2px solid #00aeff;
+}
+.card ul {
     padding: 0;
-} */
+    width: 280px;
+    max-width: 280px;
+    /* padding: 0 10px; */
+}
+.card li {
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0;
+    padding: 0 10px;
+    min-height: 20px;
+    border-bottom: 1px solid #00aeff;
+}
+.card li p {
+    display: inline-block;
+    max-width: 63%;
+    text-align: end;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.card div {
+    margin: 0;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
 
-/* .card button, .edit-button, #auth button, .create-button-wrapper button, .edit-buttons, .search-button, #reload-dashboard {
-    border: 1px solid #00aeff;
-    border-radius: 10px;
-    font-size: 14px;
-    background-color: #58bae7;
-    outline: none;
-} */
-
-/* .edit-buttons {width: 120px;}
-
-#auth button, .search-button {
-    width: 100px;
-} */
-
-/* .card button:last-child {
+.delete {
+    display: block;
+    margin: auto;
     position: absolute;
-    top: 4%;
-    right: 1%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    border-color: #00aeff;
-} */
-
-
-
-/* ========================================= */
-
-/* #edit-form, #visit-form {
-    position: fixed;
-    width: 500px;
-    min-height: 100px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-} */
-
-/* #visit-form * {
-    margin-top: 5px;
-    margin-bottom: 5px;
-} */
-/*
-#visit-form header {
-    margin-top: 0;
-}
-
-#edit-form input, #edit-form button, #edit-form label {
-    margin: 5px;
-}
-#edit-form label, #visit-form label, #search-form label {
-    color: rgb(87, 87, 87);
-}
-#edit-form {
-    position: absolute;
-    right: 32%;
-    top: 12%;
-}
-
-#search-form {
-    position:absolute;
-    top: 13%;
-    right: 40%;
-    width: 300px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-#search-form label {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-} */
-
-
-/* .edit-button-wrapper , .create-buttons-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 5px;
-}*/
-
-/* .edit-button-wrapper * {margin: 5px;} */
-
-/* #auth {
-    height: 120px;
-    position: relative;
-    padding-top: 30px;
-} */
-/* #auth-title, .create-title, .search-title, .modal-title{
-    position: absolute;
+    background-color: transparent;
     top: 0;
-} */
-
+    right: 0;
+    width: 35px;
+    border: none;
+    outline: none;
+}
 
 .empty {
     display: block;
@@ -274,21 +220,12 @@ input, select, textarea {
     font-size: 18px;
 }
 
-/* #visit-form {
-    padding-top: 30px;
-    padding-bottom: 15px;
-    min-height: 80px;
-    display: flex;
-    justify-content: space-around;
-} */
+#search-section {
+    width: 1200px;
+    min-height: 128px;
+}
 
-/* .create-button-wrapper {
-    width: 200px;
-    margin: 5px;
-} */
-
-/* #reload-dashboard {
-    margin-top: 20px;
-    width: 150px;
-    font-size: 20px;
-} */
+#visit-form, #edit-form {
+    position: fixed;
+    margin: 0;
+}

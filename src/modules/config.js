@@ -2,25 +2,6 @@ const root = document.getElementById("root");
 
 const button = document.getElementById("button");
 
-const data = {
-    account: {
-        "email": "velocity@fex.net",
-        "password": "velocity"
-    },
-    url: "https://ajax.test-danit.com/api/v2/cards/",
-
-    name: undefined,
-    purpose: undefined,
-    description: undefined,
-    urgency: undefined,
-    bodyMassIndex: undefined,
-    pressure: undefined,
-    heartDiseases: undefined,
-    lastVisitDate: undefined,
-    age: undefined
-
-}
-
 function changeButtonsValue () {
   button.textContent = "Вхід" ? button.textContent = "Створити візит" : button.textContent = "Вхід";
 }
@@ -56,6 +37,11 @@ const config = {
     type: "submit",
     id: "submit",
     value: "Створити"
+  },
+  edit : {
+    type: "button",
+    id: "edit",
+    value: "Редагувати"
   },
     visitValues: {
       place: root,
@@ -106,7 +92,7 @@ const config = {
               place: root,
               type: "number",
               placeholder: "Індекс маси тіла",
-              id: "visit-form-date",
+              id: "visit-form-body-mass-index",
               className: undefined,
               name: undefined
           },
@@ -139,6 +125,12 @@ const config = {
       },
     },
 
+    cardValues: {
+      place: root,
+      id: undefined,
+      title: undefined,
+    },
+
     buttonWrapper (place, className) {
         const div = document.createElement("div");
         div.className = `${className}`;
@@ -152,33 +144,63 @@ const config = {
 }
 
 const ajax = {
+  account: {
+    "email": "velocity@fex.net",
+    "password": "velocity"
+  },
+
+  url: "https://ajax.test-danit.com/api/v2/cards/",
+
+  doctor: "Кардіолог",
   cardiologist: {
     doctor: "Кардіолог",
-    purpose: undefined,
+    name: "",
+    purpose: "",
+    description: "",
     urgency: "Звичайна",
-    description: undefined,
-    name: undefined,
-    pressure: undefined,
-    bodyMassIndex: undefined,
-    heartDiseases: undefined,
-    age: undefined
+    pressure: "",
+    bodyMassIndex: "",
+    heartDiseases: "",
+    age: ""
   },
   dentist: {
     doctor: "Дантист",
-    purpose: undefined,
+    name: "",
+    purpose: "",
+    description: "",
     urgency: "Звичайна",
-    description: undefined,
-    name: undefined,
-    lastVisitDate: undefined
+    lastVisitDate: ""
   },
   therapist: {
     doctor: "Терапевт",
-    purpose: undefined,
+    name: "",
+    purpose: "",
+    description: "",
     urgency: "Звичайна",
-    description: undefined,
-    name: undefined,
-    age: undefined
+    age: ""
+  },
+
+  define () {
+    if (this.doctor === "Дантист") {
+      return this.dentist;
+    } else if (this.doctor === "Терапевт") {
+      return this.therapist;
+    } else {
+      return this.cardiologist;
+    }
+  },
+
+  unset () {
+    for (let prop in this.cardiologist) { this.cardiologist[prop] = "";}
+    this.cardiologist.doctor = "Кардіолог";
+    this.cardiologist.urgency = "Звичайна";
+    for (let prop in this.dentist) { this.dentist[prop] = "";}
+    this.dentist.doctor = "Дантист";
+    this.dentist.urgency = "Звичайна";
+    for (let prop in this.therapist) { this.therapist[prop] = ""; }
+    this.dentist.doctor = "Терапевт";
+    this.dentist.urgency = "Звичайна";
   }
 }
 
-export {root, button, data, changeButtonsValue, config, ajax}
+export {root, button, changeButtonsValue, config, ajax}

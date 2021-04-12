@@ -1,5 +1,8 @@
-import { config, data } from "./config.js";
+import { config, ajax } from "./config.js";
+import Visit from "./Visit.js";
 import Client from "./Client.js";
+import Dashboard from "./Dashboard.js";
+
 class Form {
     constructor (place, id) {
         this.id = id;
@@ -41,31 +44,41 @@ class Input {
         class="${this.className}"
         id="${this.id}" name="${this.name}"
         placeholder="${this.placeHolder}" required>`);
-        document.getElementById(id).addEventListener("blur", this.listen);
+        document.getElementById(id).addEventListener("change", this.listen);
 
         return document.getElementById(id);
       }
     }
 
     listen (event) {
-      switch (this.id) {
-        case config.visitValues.name.id: data.name = event.target.value;
+      switch (event.target.id) {
+        case config.visitValues.name.id:
+          ajax.cardiologist.name = event.target.value;
+          ajax.dentist.name = event.target.value;
+          ajax.therapist.name = event.target.value;
           break;
-          case config.visitValues.purpose.id: data.purpose = event.target.value;
-            break;
-            case config.visitValues.therapist.age.id: data.age = event.target.value;
-              break;
-              case config.visitValues.cardiologist.age.id: data.age = event.target.value;
-                break;
-                case config.visitValues.cardiologist.pressure.id: data.pressure = event.target.value;
-                  break;
-                  case config.visitValues.dentist.lastVisitDate.id: data.lastVisitDate = event.target.value;
-                    break;
-                    case config.visitValues.cardiologist.heartDiseases.id: data.heartDiseases = event.target.value;
-                      break;
-                      case config.visitValues.cardiologist.bodyMassIndex.id: data.bodyMassIndex = event.target.value;
-                        break;
-                          default: return;
+        case config.visitValues.purpose.id: 
+          ajax.cardiologist.purpose = event.target.value;
+          ajax.dentist.purpose = event.target.value;
+          ajax.therapist.purpose = event.target.value;
+          break;
+        case config.visitValues.cardiologist.age.id:
+          ajax.cardiologist.age = event.target.value;
+          ajax.therapist.age = event.target.value;
+          break;
+        case config.visitValues.cardiologist.pressure.id:
+          ajax.cardiologist.pressure = event.target.value;
+          break;
+        case config.visitValues.dentist.lastVisitDate.id:
+          ajax.dentist.lastVisitDate = event.target.value;
+          break;
+        case config.visitValues.cardiologist.heartDiseases.id:
+          ajax.cardiologist.heartDiseases = event.target.value;
+          break;
+        case config.visitValues.cardiologist.bodyMassIndex.id:
+          ajax.cardiologist.bodyMassIndex = event.target.value;
+          break;
+          default: return;
       }
     }
   }
@@ -86,11 +99,15 @@ class Select {
               <option>Невідкладна</option>Звичайна
           </select>
       </label>`);
-      document.getElementById(id).addEventListener("click", this.listen);
+      document.getElementById(id).addEventListener("click", (ev) => {
+        ajax.cardiologist.urgency = ev.target.value;
+        ajax.dentist.urgency = ev.target.value;
+        ajax.therapist.urgency = ev.target.value;
+      });
       return document.getElementById(`${id}`);
-  }
-
-  addDoctorSelect (place = this.place, id = this.id, labelFor = this.labelFor) {
+    }
+    
+    addDoctorSelect (place = this.place, id = this.id, labelFor = this.labelFor) {
       place.insertAdjacentHTML("beforeend", `
       <label class="doctor-modal-select" for="${labelFor}">Виберіть лікаря
           <select id="${id}">
@@ -98,13 +115,10 @@ class Select {
               <option>Дантист</option>
               <option>Терапевт</option>
           </select>
-      </label>`);
+          </label>`);
+          document.getElementById(id).addEventListener("click", (ev) => ajax.doctor = ev.target.value);
 
-      return document.getElementById(id);
-  }
-
-  listen (event) {
-    data.urgency = event.target.value;
+          return document.getElementById(id);
   }
 
 }
@@ -118,13 +132,15 @@ class TextArea {
   add (id = this.id, place = this.place) {
     place.insertAdjacentHTML("beforeend", `
     <textarea id="${id}" rows="4" cols="22" placeholder="Опис візиту"></textarea>`);
-    document.getElementById(id).addEventListener("blur", this.listen);
+    document.getElementById(id).addEventListener("change", this.listen);
 
     return document.getElementById(id);
   }
 
   listen (event) {
-    data.description = event.target.value;
+    ajax.cardiologist.description = event.target.value;
+    ajax.dentist.description = event.target.value;
+    ajax.therapist.description = event.target.value;
   }
 }
 
@@ -139,6 +155,7 @@ class Button {
         this.eventType = "click";
         this.type === "submit" ? this.eventType = "submit" : false;
         click.parentElement.parentElement.addEventListener(this.eventType, this.enableClick);
+        click.addEventListener("click", this.cardEvents);
 
         return click;
     }
@@ -156,11 +173,30 @@ class Button {
       event.target.parentElement.parentElement.remove() : false;
 
       if (event.target.id === "authorization") {
-        new Client({}).setUp();
+        new Client({}).auth();
+        event.target.parentElement.parentElement.remove();
+      } else if (event.target.id === "submit") {
+        new Client(ajax.define()).post().then(() => {
+          new Dashboard().update();
+        });
         event.target.parentElement.parentElement.remove();
       }
     }
-  }
 
+    cardEvents (event) {
+      if (event.target.className === "folding") {
+        const dashboard = new Dashboard();
+        event.target.parentElement.parentElement.children[1].children.length === 3 ?
+        dashboard.folding(event.target.parentElement.parentElement, event.target) : 
+        dashboard.folding(event.target.parentElement.parentElement, event.target, true);
+      } else if (event.target.className === "edit") {
+        document.getElementById("edit-form") === null ?
+          new Dashboard().edit(event.target.parentElement.parentElement) : false;
+      } else if (event.target.className === "delete") {
+        event.target.parentElement.remove();
+        new Client({}).delete(event.target.id.substr(7));
+      }
+    }
+  }
 
 export {Form, Input, Select, TextArea, Button};
