@@ -1,6 +1,7 @@
 import { root, button, ajax, changeButtonsValue, config } from "./config.js";
 import { Form, Input, Select, TextArea, Button } from "./components.js";
 import Visit from "./Visit.js";
+import Dashboard from "./Dashboard.js";
 
 export default class VisitCardiologist extends Visit {
   constructor() {

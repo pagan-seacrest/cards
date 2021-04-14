@@ -43,6 +43,16 @@ const config = {
     id: "edit",
     value: "Редагувати"
   },
+  search: {
+    type: "button",
+    id: "search",
+    value: "Фільтрувати"
+  },
+  reset: {
+    type: "button",
+    id: "reset",
+    value: "Скинути"
+  },
     visitValues: {
       place: root,
         name: {
@@ -125,6 +135,53 @@ const config = {
       },
     },
 
+    filterValues: {
+      doctor: {
+        id: "filter-doctor",
+        label: {
+          className: "filter-doctor-label",
+          text: "Заголовком"
+        },
+        option: ["Всі","Кардіолог", "Дантист", "Терапевт"],
+      },
+      urgency: {
+        id: "filter-urgency",
+        label: {
+          className: "filter-urgency-label",
+          text: "Терміновістю"
+        },
+        option: ["Всі", "Звичайна", "Важлива", "Невідкладна"],
+      },
+      purpose: {
+        id: "filter-purpose",
+        label: { id: "filter-purpose-label"},
+        text: "Метою візиту",
+      },
+    },
+    searchValues: {
+      all: true,
+      doctor: {
+        all: true,
+        picked: "Всі",
+      },
+      urgency: {
+        all: true,
+        picked: "Всі", 
+      },
+      purpose: {
+        content: false,
+        value: ""
+      },
+      clear () {
+        this.all = true;
+        this.doctor.all = true;
+        this.doctor.picked = "Всі";
+        this.urgency.all = true;
+        this.urgency.picked = "Всі";
+        this.purpose.content = false;
+        this.purpose.value = "";
+      }
+    },
     cardValues: {
       place: root,
       id: undefined,
@@ -198,9 +255,18 @@ const ajax = {
     this.dentist.doctor = "Дантист";
     this.dentist.urgency = "Звичайна";
     for (let prop in this.therapist) { this.therapist[prop] = ""; }
-    this.dentist.doctor = "Терапевт";
-    this.dentist.urgency = "Звичайна";
+    this.therapist.doctor = "Терапевт";
+    this.therapist.urgency = "Звичайна";
   }
 }
 
-export {root, button, changeButtonsValue, config, ajax}
+function welcome () {
+  root.insertAdjacentHTML("beforeend", `
+  <div id="welcome">
+  <h2>Вітаємо! Раді, що завітали!</h2>
+  <h3>Для подальшої роботи ви маєте бути авторизовані</h3>
+  </div>`)
+  return document.getElementById("welcome");
+}
+
+export {root, button, changeButtonsValue, config, ajax, welcome}

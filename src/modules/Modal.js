@@ -32,12 +32,12 @@ export default class Modal {
       }).add();
     }
 
-    selectDoctor ({place = this.form, labelFor = this.id, id}) {
-      return new Select ({id: id, place: place, forForm: labelFor}).addDoctorSelect();
+    selectDoctor ({place = this.form, labelFor = this.id, id, text}) {
+      return new Select ({id: id, place: place, forForm: labelFor, textDoctor: text}).addDoctorSelect();
     }
 
-    selectUrgency ({id, place = this.form, labelFor = this.id}) {
-      return new Select ({id: id, place: place, forForm: labelFor}).addUrgencySelect();
+    selectUrgency ({id, place = this.form, labelFor = this.id, text}) {
+      return new Select ({id: id, place: place, forForm: labelFor, textUrgency: text}).addUrgencySelect();
     }
 
     textArea ({id, place = this.form}) {

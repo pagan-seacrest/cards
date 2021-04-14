@@ -6,6 +6,42 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+
+}
+#welcome {
+    color: aqua;
+    text-shadow: 1px 1px 2px black;
+    margin-top: 200px;
+    text-align: center;
+}
+footer {
+    padding: 0 10px;
+    height: 50px;
+    background-color: rgba(0, 77, 87, 0.432);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 1px 1px 2px black;
+}
+.dan-it {
+    color: aqua;
+}
+.step-project {
+    margin-left: 20px;
+    position: relative;
+    color: rgb(36, 34, 34);
+    text-shadow: 1px 1px 2px #fff;
+}
+.step-project::before {
+    box-sizing: border-box;
+    content: "";
+    display: block;
+    background-color: rgb(40, 167, 192);
+    width: 1.5px;
+    height: 25px;
+    position: absolute;
+    left: -10px;
+    top: -20%;
 }
 
 ul {list-style: none;}
@@ -53,9 +89,7 @@ input, select, textarea {
     border: 2px solid rgb(141, 141, 141);
 }
 
-#button,
-#search,
-#create-visit {
+#button, #create-visit {
     border: none;
     background-color: transparent;
     color: aqua;
@@ -63,27 +97,22 @@ input, select, textarea {
     font-size: 20px;
 }
 
-
-#search {margin-right: 50px;}
-
 #button {margin-right: 20px}
 
 #button:hover {cursor: pointer;}
 
 #root {
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    /* flex-direction: column; */
-    /* width: 100px; */
-    /* height: 100px; */
-    /* background-color: black; */
+    align-items: center;
+    align-content: center;
 }
 
 .modal{
-    margin-top: 120px;
-    background-color: rgb(145, 228, 228);
+    margin-top: 20px;
+    background-color: rgba(145, 228, 228);
     border: 2px solid rgb(141, 141, 141);
     border-radius: 20px;
     width: 500px;
@@ -101,7 +130,7 @@ input, select, textarea {
     justify-content: center;
     font-size: 18px;
     color: #fff;
-    background-color: rgb(87, 87, 87);
+    background-color: rgba(45, 80, 87, 0.555);
   border-radius: 20px 20px 0  0;
 }
 .modal *:not(:first-child) {
@@ -125,6 +154,8 @@ input, select, textarea {
 #auth-form {
     width: 500px;
     height: 150px;
+    position: absolute;
+    top: 35%;
 }
 
 #auth {
@@ -138,6 +169,9 @@ input, select, textarea {
 }
 
 #dashboard {
+    margin-top: 0;
+    padding-top: 30px;
+    padding-bottom: 10;
     position: relative;
     width: 1240px;
     min-height: 128px;
@@ -146,9 +180,12 @@ input, select, textarea {
     justify-content: space-evenly;
     align-items: baseline;
     align-content: center;
+    margin-bottom: 20px;
 }
+
 #dashboard .modal-title {
     position: absolute;
+    top: 0;
 }
 
 .card {
@@ -175,7 +212,6 @@ input, select, textarea {
     padding: 0;
     width: 280px;
     max-width: 280px;
-    /* padding: 0 10px; */
 }
 .card li {
     flex-flow: row wrap;
@@ -227,5 +263,37 @@ input, select, textarea {
 
 #visit-form, #edit-form {
     position: fixed;
-    margin: 0;
+    margin: 0 auto 0;
+}
+
+#visit-form .modal-title, #edit-form .modal-title {
+    margin-bottom: 15px;
+}
+#filter {
+    position: relative;
+    width: 1240px;
+    min-height: 50px;
+    height: 70px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+}
+#filter header {
+    position: absolute;
+    top: 0;
+}
+#filter .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: 50px;
+    align-content: center;
+}
+#filter label, #filter div {
+    margin: 35px 0 0;
+}
+
+#root {
+    height: 100vh;
 }

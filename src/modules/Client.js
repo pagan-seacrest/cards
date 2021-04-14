@@ -1,7 +1,4 @@
 import {root, button, ajax, changeButtonsValue, config} from "./config.js";
-import VisitCardiologist from "./VisitCardiologist.js";
-import VisitDentist from "./VisitDentist.js";
-import VisitTherapist from "./VisitTherapist.js";
 import Modal from "./Modal.js";
 import Dashboard from "./Dashboard.js";
 
@@ -14,7 +11,10 @@ export default class Client {
     auth () {
       try {
         const thread = new Promise((resolve, reject) => {
-          this.login().then(res => resolve(localStorage.setItem("token", res)));
+          this.login().then(res => {
+              resolve(localStorage.setItem("token", res))
+              new Dashboard().update();
+            });
           button.removeEventListener("click", this.setup);
           button.addEventListener("click", () => new Dashboard().createVisit());
         });
@@ -35,9 +35,10 @@ export default class Client {
       const div = auth.wrap("button-wrapper");
       config.authorize.place = div;
       config.cancel.place = div;
-      auth.button(config.authorize);
+      auth.button(config.authorize).addEventListener("click", () => {
+          document.getElementById("welcome").remove();
+        }, {once: true});
       auth.button(config.cancel);
-
       }
     }
 
